@@ -1,6 +1,6 @@
 import mongoose, {Document, Schema} from "mongoose";
 import { User } from "../Interfaces/User";
-import { required } from "joi";
+
 
 
 
@@ -30,5 +30,6 @@ const UserSchema: Schema = new Schema(
         }
     }
 )
+
 
 export default mongoose.model<IUserModel>('E-learning-users', UserSchema);

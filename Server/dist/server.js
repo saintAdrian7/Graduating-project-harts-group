@@ -17,6 +17,9 @@ const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Index_1 = require("./config/Index");
 const Users_1 = __importDefault(require("./Routes/Users"));
+const Course_1 = __importDefault(require("./Routes/Course"));
+const Module_1 = __importDefault(require("./Routes/Module"));
+const Update_1 = __importDefault(require("./Routes/Update"));
 const PORT = Index_1.config.server.port;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -27,6 +30,9 @@ app.use((0, cors_1.default)());
             yield mongoose_1.default.connect(Index_1.config.mongo.url);
             console.log("Connected to the database successfully");
             app.use('/users', Users_1.default);
+            app.use('/Courses', Course_1.default);
+            app.use('/modules', Module_1.default);
+            app.use('/update', Update_1.default);
         }
         catch (error) {
             console.log("Could not make a connection to the database");

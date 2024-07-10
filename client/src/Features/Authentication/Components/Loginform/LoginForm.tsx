@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import './LoginForm.css'
-import { loginUser, useAuth } from "../../../../Context/ContextProvider";
+import { loginUser, useAuth } from "../../../../Context/AuthContextProvider";
 
 interface LoginFormProps{
     toggleRegister():void

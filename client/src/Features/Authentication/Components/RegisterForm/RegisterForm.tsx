@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { registerUser, useAuth } from "../../../../Context/ContextProvider";
+import { registerUser, useAuth } from "../../../../Context/AuthContextProvider";
 import './Register.css'
 
 interface RegisterFormProps{
@@ -57,7 +57,7 @@ if(firstNameRef && firstNameRef.current && lastNameRef && lastNameRef.current &&
             </div>
             {state.error && <p className="register-form-error">Unable to register at this time</p>}
             <button className="register-form-button" onClick={handleRegister}>Register</button>
-            {state.registerSuccess && <p className=".register-form-register-message">registered success <span className="register-form-toggle" onClick={toggleLogin}>Click here</span> to login</p>}
+            {state.registerSuccess && <p className=".register-form-register-message">registered success</p>}<span className="register-form-toggle" onClick={toggleLogin}>Click here to login</span> 
             
 
         </form>

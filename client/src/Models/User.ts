@@ -22,3 +22,10 @@ export interface FetchUserPayload{
     userId:string,
     property:'loggedInUser' | 'profileUser'
 }
+
+export interface CoursePayLoad {
+    title: string;
+    description: string;
+    Instructor: string | undefined;
+    Image?: string;
+  }

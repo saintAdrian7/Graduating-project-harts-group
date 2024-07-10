@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useAuth } from "../../../../Context/ContextProvider"
+import { useAuth } from "../../../../Context/AuthContextProvider"
 import { LoginForm } from "../Loginform/LoginForm"
 import { RegisterForm } from "../RegisterForm/RegisterForm"
 import { Modal } from "../../Components/Modal"

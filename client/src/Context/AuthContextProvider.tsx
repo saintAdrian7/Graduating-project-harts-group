@@ -88,7 +88,7 @@ const initialState: AuthenticationState = {
     try {
       const response = await axios.post('http://localhost:4000/users/login', user);
       dispatch({ type: 'LOGIN SUCCESS', payload: response.data.user });
-      localStorage.setItem("userId", response.data.user._id);
+      localStorage.setItem("userId", response.data.user.id);
       console.log(response.data.user);
     } catch (error) {
       dispatch({ type: 'LOGIN FAILURE' });

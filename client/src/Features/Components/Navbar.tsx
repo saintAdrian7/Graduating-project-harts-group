@@ -1,4 +1,4 @@
-import { useAuth } from "../../Context/ContextProvider"
+import { useAuth } from "../../Context/AuthContextProvider"
 
 export default function Navbar () {
 const {state, dispatch} = useAuth()
@@ -10,7 +10,6 @@ const setDisplayLogin = () => {
     return(
         <>
          <h1>Nav bar</h1>
-        <button onClick={setDisplayLogin}>Login</button>
         </>
        
     )

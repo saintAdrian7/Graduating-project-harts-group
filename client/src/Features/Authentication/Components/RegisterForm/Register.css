@@ -29,7 +29,8 @@ color: #FFFFFF;
 }
 
 .register-form-error {
-    color: #CB4C4E;
+    color: black;
+    font-weight: bold;
 }
 
 .register-form-input-group{
