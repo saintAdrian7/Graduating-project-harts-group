@@ -94,10 +94,10 @@ function createModule(module) {
         }
     });
 }
-function updateModule(id, updateData) {
+function updateModule(id, module) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const updatedModule = yield CourseModule_1.default.findByIdAndUpdate(id, { $set: updateData }, { new: true, runValidators: true });
+            const updatedModule = yield CourseModule_1.default.findByIdAndUpdate(id, { $set: module }, { new: true, runValidators: true });
             return updatedModule;
         }
         catch (error) {

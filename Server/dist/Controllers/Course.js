@@ -157,7 +157,6 @@ const updateCourseWithModules = (req, res) => __awaiter(void 0, void 0, void 0, 
     try {
         const courseObjectId = new mongoose_1.default.Types.ObjectId(courseId);
         const modules = yield CourseModule_1.default.find({ course: courseObjectId });
-        console.log('Found modules:', modules);
         if (!modules || modules.length === 0) {
             return res.status(404).json({ message: 'No modules found.' });
         }

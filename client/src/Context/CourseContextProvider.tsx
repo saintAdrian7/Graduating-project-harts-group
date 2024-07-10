@@ -73,7 +73,7 @@ export const CourseProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
 export const useCourseContext = () => useContext(CourseContext);
 
-export const fetchCourse = async (dispatch: React.Dispatch<CourseAction>, courseId: string) => {
+export const fetchCourse = async (dispatch: React.Dispatch<CourseAction>, courseId: string | undefined) => {
   dispatch({ type: 'FETCH_COURSE_REQUEST' });
   try {
     const response = await axios.get(`http://localhost:4000/Courses/${courseId}`);

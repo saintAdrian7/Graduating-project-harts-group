@@ -77,10 +77,10 @@ export async function createModule(module:ICourseModule):Promise<ICourseModule> 
     }
 }
 
-export async function updateModule(id:string,  updateData: Partial<ICourseModule>):Promise<ICourseModule | null> {
+export async function updateModule(id:string,  module: Partial<ICourseModule>):Promise<ICourseModule | null> {
     try{
         const updatedModule = await CourseModule.findByIdAndUpdate(id,
-            { $set: updateData },
+            { $set: module },
             { new: true, runValidators: true })
         return updatedModule
         

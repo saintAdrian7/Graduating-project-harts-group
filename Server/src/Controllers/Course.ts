@@ -168,8 +168,6 @@ export const updateCourseWithModules = async (req: Request, res: Response) => {
         const courseObjectId = new mongoose.Types.ObjectId(courseId);
         
         const modules = await CourseModule.find({ course: courseObjectId });
-
-        console.log('Found modules:', modules); 
         if (!modules || modules.length === 0) {
             return res.status(404).json({ message: 'No modules found.' });
         }

@@ -46,7 +46,7 @@ text-align: left;
 color: #FFFFFF;
 }
 
-input{
+.create-form input{
  width: 100%;
  height: 90px;
  top: 392px;
@@ -56,7 +56,7 @@ input{
  opacity: 0px;  
 }
 
-input::placeholder{
+.create-form input::placeholder{
 font-family: Inder;
 font-size: 24px;
 font-weight: 400;

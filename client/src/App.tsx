@@ -3,8 +3,7 @@ import HomePage from "./Pages/Homepage/Homepage"
 import { Layoutpage } from "./Pages/Layoutpage/Layoutpage";
 import Course from "./Features/Components/Course/Course";
 import CourseForm from "./Features/Components/CourseForm/CourseForm";
-import { useAuth } from "./Context/AuthContextProvider";
-import { LoginRegisterModel } from "./Features/Authentication/Components/LoginRegisterModel/LoginRegisterModel";
+
 
 
 function App() {

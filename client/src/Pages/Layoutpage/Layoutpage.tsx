@@ -6,7 +6,7 @@ import { LoginRegisterModel } from '../../Features/Authentication/Components/Log
 
 
 
-export function Layoutpage(){
+export  function Layoutpage(){
 const {state} = useAuth()
     return(
         <div className="layoutpage">
@@ -14,7 +14,6 @@ const {state} = useAuth()
             <Navbar />
             <Outlet />
             <></>
-
         </div>
 
     )
