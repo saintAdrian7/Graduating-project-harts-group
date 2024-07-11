@@ -102,6 +102,7 @@ p{
 /* LAYERS-PANEL */
 
 .panel {
+  position: sticky;
   background-color: #EB4A01;
   padding-top: 0;
   height: 100%; 
@@ -114,7 +115,7 @@ p{
   display: flex;
   flex-direction: column;
   justify-content: space-between; 
-  height: 31.5625rem;
+  height: 100vh;
 }
 
 /* ICONS */
@@ -124,4 +125,20 @@ p{
   flex: auto;
   justify-content: space-between;
   color: white;
+}
+
+
+
+@media screen and (max-width: 768px) {
+  /* Adjust styles for smaller screens (e.g., mobile devices) */
+  .top-nav-bar {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the left */
+    padding: 20px; /* Add some padding for spacing */
+  }
+
+  .login-button {
+    padding-left: 0; /* Reset padding for smaller screens */
+    margin-top: 20px; /* Add margin between elements */
+  }
 }
