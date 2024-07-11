@@ -3,6 +3,8 @@ import HomePage from "./Pages/Homepage/Homepage"
 import { Layoutpage } from "./Pages/Layoutpage/Layoutpage";
 import Course from "./Features/Components/Course/Course";
 import CourseForm from "./Features/Components/CourseForm/CourseForm";
+import { AssessmentPage } from "./Pages/Assessmentpage/Assessmentpage";
+import { CreateAssessment } from "./Pages/Assessmentpage/Assesmentform";
 
 
 
@@ -16,6 +18,8 @@ function App() {
         <Route path="/Homepage" element={<HomePage />} />
         <Route path="/CreateCourse/Course/:courseId" element={<Course />} />
         <Route path="/CreateCourse" element={ <CourseForm />} />
+        <Route path="Course/assessment" element={<AssessmentPage/>} />
+        <Route path="Course/assessment/createform" element={<CreateAssessment />} />
       </Route>
     </Routes>
     

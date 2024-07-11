@@ -75,6 +75,74 @@ p{
 }
 
 
+.top-nav-bar {
+  width: 100%;
+  background-color: #EB4A01;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Inder", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: white;
+}
+
+
+
+.login-button {
+  color: white; 
+  padding-left: 50px;
+  font-family: "Inder", sans-serif;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* LAYERS-PANEL */
+
+.panel {
+  position: sticky;
+  background-color: #EB4A01;
+  padding-top: 0;
+  height: 100%; 
+  width: 3.125rem; 
+}
+
+/* LAYERS-ICONS */
+
+.layer-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  height: 100vh;
+}
+
+/* ICONS */
+.icon{
+  height: 6.25rem;
+  display: flex;  
+  flex: auto;
+  justify-content: space-between;
+  color: white;
+}
+
+
+
+@media screen and (max-width: 768px) {
+  /* Adjust styles for smaller screens (e.g., mobile devices) */
+  .top-nav-bar {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the left */
+    padding: 20px; /* Add some padding for spacing */
+  }
+
+  .login-button {
+    padding-left: 0; /* Reset padding for smaller screens */
+    margin-top: 20px; /* Add margin between elements */
+  }
+}
+
+
 @media only screen and (max-width: 1200px) {
   .course-content{
     display: flex;
