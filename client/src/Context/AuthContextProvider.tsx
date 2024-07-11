@@ -101,6 +101,7 @@ const initialState: AuthenticationState = {
     try {
       const response = await axios.post('http://localhost:4000/users/register', user);
       dispatch({ type: 'REGISTER SUCCESS' });
+      console.log(response.data.user);
     } catch (error) {
       dispatch({ type: 'REGISTER FAILURE' });
       throw error;

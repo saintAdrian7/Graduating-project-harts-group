@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { useAuth } from "../../../Context/AuthContextProvider"
+//import { useAuth } from "../../../Context/AuthContextProvider"
 import { createCourse, fetchCourse, useCourseContext } from "../../../Context/CourseContextProvider"
 import './CourseForm.css'
 import { useNavigate } from "react-router"
@@ -10,34 +10,33 @@ export default function CourseForm(){
     const titleRef = useRef< HTMLInputElement>(null)
     const descriptionRef = useRef< HTMLInputElement>(null)
     const {contextState, dispatch} = useCourseContext()
-    const {state} = useAuth()
+    //const {state} = useAuth()
     const navigate = useNavigate()
     
 
     const handleCreateCourse = async (e:React.MouseEvent<HTMLButtonElement>):Promise<void> => {
         e.preventDefault()
 
-        if(titleRef && titleRef.current && descriptionRef && descriptionRef.current){
+        if(titleRef && titleRef.current && descriptionRef && descriptionRef.current)
             try{
-               const courseId =  await  createCourse(dispatch, 
-                    {
+               const courseId =  await  createCourse(dispatch, {
                         title: titleRef.current.value,
                         description: descriptionRef.current.value,
                         Instructor: "668d0d64a0915e96aa9f97cd"
-                    }
-                 )
+                    })
                  
                  
                  await fetchCourse(dispatch, courseId);
                  navigate(`Course/${courseId}`);
 
-            }catch(error:any){
-                throw error
+            }catch(error){
+                console.error('error creating course', error);
             }
-
-        }
-
+        
     }
+
+        
+
 
     return(
         

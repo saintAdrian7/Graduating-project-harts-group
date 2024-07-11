@@ -16,7 +16,7 @@ const passwordRef = useRef<HTMLInputElement>(null)
 const {state, dispatch} = useAuth()
 
 
-const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
+const HandleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     
 if(firstNameRef && firstNameRef.current && lastNameRef && lastNameRef.current && emailRef && emailRef.current && passwordRef && passwordRef.current){
@@ -56,7 +56,7 @@ if(firstNameRef && firstNameRef.current && lastNameRef && lastNameRef.current &&
                 <input type="password" placeholder="Password" name="password"  required ref={passwordRef}/>
             </div>
             {state.error && <p className="register-form-error">Unable to register at this time</p>}
-            <button className="register-form-button" onClick={handleRegister}>Register</button>
+            <button className="register-form-button" onClick={HandleRegister}>Register</button>
             {state.registerSuccess && <p className=".register-form-register-message">registered success</p>}<span className="register-form-toggle" onClick={toggleLogin}>Click here to login</span> 
             
 

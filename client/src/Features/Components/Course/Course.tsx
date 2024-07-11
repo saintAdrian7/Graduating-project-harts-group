@@ -1,4 +1,4 @@
-import { useAuth } from '../../../Context/AuthContextProvider';
+//import { useAuth } from '../../../Context/AuthContextProvider';
 import { useCourseContext, fetchCourse } from '../../../Context/CourseContextProvider';
 import { useParams } from 'react-router';
 import './Course.css';
@@ -17,7 +17,7 @@ export interface CourseModule {
 
 export default function Course() {
   const [displayModuleForm, setDisplayModuleForm] = useState<boolean>(false);
-  const { state } = useAuth();
+  //const { state } = useAuth();
   const { contextState, dispatch } = useCourseContext();
   const { courseId } = useParams();
   const [selectedModule, setSelectedModule] = useState<CourseModule | null>(null);
@@ -46,8 +46,12 @@ export default function Course() {
       await axios.delete(`http://localhost:4000/modules/${moduleId}`)
       await axios.get(`http://localhost:4000/update/${courseId}`);
       fetchCourse(dispatch, courseId);
-    }catch(error:any){
-      console.log(error.message)
+    }catch(error){
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log('An unknown error occurred');
+      }
     }
   };
 

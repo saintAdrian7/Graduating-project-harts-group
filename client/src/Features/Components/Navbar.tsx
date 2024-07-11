@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useAuth } from "../../Context/AuthContextProvider"
 
 export default function Navbar () {
@@ -10,6 +11,8 @@ const setDisplayLogin = () => {
     return(
         <>
          <h1>Nav bar</h1>
+         {console.log(state)}
+         <Button onClick={setDisplayLogin}>Login</Button>
         </>
        
     )

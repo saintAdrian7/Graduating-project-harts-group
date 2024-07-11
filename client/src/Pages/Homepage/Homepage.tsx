@@ -6,7 +6,7 @@ const {state} = useAuth()
     return (
         <>
         <h2>Homepage</h2>
-        {state.displayLogin && <LoginRegisterModel />  }
+        {state.displayLogin && !state.loggedInUser && <LoginRegisterModel />  }
         
         </>
         

@@ -8,7 +8,7 @@ interface LoginFormProps{
 
 
 export const LoginForm:React.FC<LoginFormProps> = ({toggleRegister}) =>{
-    const {state, dispatch} = useAuth()
+    const { dispatch} = useAuth()
     const [error, setError] = useState<boolean>(false)
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)

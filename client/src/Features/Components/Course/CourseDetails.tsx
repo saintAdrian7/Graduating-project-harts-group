@@ -1,13 +1,19 @@
-import { useAuth } from '../../../Context/AuthContextProvider'
+//import { useAuth } from '../../../Context/AuthContextProvider'
 import { useCourseContext, fetchCourse } from '../../../Context/CourseContextProvider'
 import { useParams } from 'react-router'
 import { useEffect } from 'react'
 import './CourseDetails.css'
 
 export default function CourseDetails () {
-const {state} = useAuth()
-const {contextState, dispatch} = useCourseContext()
-const {courseId} = useParams();
+    //const {state} = useAuth()
+    const {contextState, dispatch} = useCourseContext()
+    const {courseId} = useParams<{courseId:string}>();
+
+    useEffect(() => {
+        if (courseId) {
+        fetchCourse(dispatch, courseId)
+        }
+    }, [courseId, dispatch])
 
 
     return(
