@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router'
 import './Layoutpage.css'
-import Navbar from '../../Features/Components/Navbar'
 import { useAuth } from '../../Context/AuthContextProvider'
 import { LoginRegisterModel } from '../../Features/Authentication/Components/LoginRegisterModel/LoginRegisterModel'
 import HomeNavbar from '../Homepage/HomeNavbar'
@@ -15,7 +14,7 @@ const {state} = useAuth()
             {state.loggedInUser && <HomeNavbar />}
             <Navbar/>
             <Outlet />
-            <></>
+            <MuiPanel/>
         </div>
 
     )

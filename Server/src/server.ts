@@ -6,6 +6,7 @@ import AuthRoutes from './Routes/Users'
 import CourseRoutes from './Routes/Course'
 import ModuleRoutes from './Routes/Module'
 import UpdateRoutes from './Routes/Update'
+import AsessmentRoutes from './Routes/Asessment'
 
 const PORT = config.server.port
 const app:Express = express()
@@ -21,6 +22,7 @@ app.use(cors());
         app.use('/Courses', CourseRoutes)
         app.use('/modules', ModuleRoutes)
         app.use('/update', UpdateRoutes)
+        app.use('/Asessments', AsessmentRoutes)
     } catch (error) {
         console.log("Could not make a connection to the database");
         console.error(error);
