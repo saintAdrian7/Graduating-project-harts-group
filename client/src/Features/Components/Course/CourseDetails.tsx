@@ -2,12 +2,41 @@ import { useAuth } from '../../../Context/AuthContextProvider'
 import { useCourseContext, fetchCourse } from '../../../Context/CourseContextProvider'
 import { useParams } from 'react-router'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
 import './CourseDetails.css'
+import axios from 'axios'
 
 export default function CourseDetails () {
 const {state} = useAuth()
 const {contextState, dispatch} = useCourseContext()
 const {courseId} = useParams();
+const navigate = useNavigate()
+
+const handleCreateAssement = () => {
+    navigate(`/assessment/createform/${courseId}`)
+
+}
+
+const handleDeleteCourse = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this course?");
+    
+    if (confirmDelete) {
+      try {
+        await axios.delete(`http://localhost:4000/Courses/${courseId}`);
+        navigate('/');
+      } catch (error:any) {
+        console.log(error.message);
+        
+      }
+    }
+  };
+  
+useEffect(() => {
+    if (courseId && (!contextState.course || contextState.course._id !== courseId)) {
+      fetchCourse(dispatch, courseId);
+    }
+  }, [courseId, contextState.course, dispatch]);
+
 
 
     return(
@@ -26,6 +55,9 @@ const {courseId} = useParams();
             <img className='instructor-img' src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNzA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&q=80&w=400" loading="lazy" alt="Instructor picture" width={191} height={254}/>
              <p>Instructor</p>
             </div>
+            {state.loggedInUser?.id === contextState.course?.Instructor._id && <button className='create-asessment-btn' onClick={handleCreateAssement}>Create or add questions for this course Assessment here</button> }
+            {state.loggedInUser?.id === contextState.course?.Instructor._id && <button onClick={handleDeleteCourse}  className='delete-course-btn'>Delete this Course</button>}
+            
         </>
         
     )

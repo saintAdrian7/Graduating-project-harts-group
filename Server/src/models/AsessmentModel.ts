@@ -5,6 +5,7 @@ export interface Question {
     question: string;
     answers: string[];
     correctAnswer: string;
+    course: string
 }
 
 export interface IQuestionModel extends Question, Document {}
@@ -20,6 +21,11 @@ const AsessmentSchema = new Schema({
    },
    correctAnswer: {
     type: String,
+    required:true
+   },
+   course: {
+    type: [Schema.Types.ObjectId],
+    ref: 'Course',
     required:true
    }
 })

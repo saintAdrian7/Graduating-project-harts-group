@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import CourseDetails from './CourseDetails';
 import { ModuleForm } from './Moduleform/Moduleform';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router';
 export interface CourseModule {
   _id: string;
   title: string;
@@ -21,6 +21,12 @@ export default function Course() {
   const { contextState, dispatch } = useCourseContext();
   const { courseId } = useParams();
   const [selectedModule, setSelectedModule] = useState<CourseModule | null>(null);
+  const navigate = useNavigate()
+
+  const handleTakeAsessment = () =>{
+navigate(`/assessment/${courseId}`)
+
+  }
 
   const toggleModuleForm = () => {
     setDisplayModuleForm(!displayModuleForm);
@@ -61,6 +67,7 @@ export default function Course() {
   if (contextState.error) return <h1>Error loading the course!</h1>;
   if (!contextState.course) return <h1>The course was not found</h1>;
 
+
   return (
     <div className='course-content'>
       <div className="course-details">
@@ -84,17 +91,22 @@ export default function Course() {
         )}
       </div>
       <div className="course-modules">
-           <button className='toggle-module-form-btn' onClick={toggleModuleForm}>
+        {state.loggedInUser?.id === contextState.course.Instructor._id &&  <button className='toggle-module-form-btn' onClick={toggleModuleForm}>
            {displayModuleForm ? "Hide Module Form" : "Add Course Module Here"}
-           </button>
+           </button>}
+          
         <div className='modules-container'>
           {contextState.course.Modules.map((module) => (
             <div className={`module ${selectedModule?._id === module._id ? 'active' : ''}`} key={module._id} onClick={() => handleModuleClick(module)}>
               <h2 className={`module-title ${selectedModule?._id === module._id ? 'active' : ''}`}>{module.title}</h2>
-              <button className='update-module-btn' onClick={() => handleUpdateClick(module)}>Update</button>
-              <button className='delete-module-btn' onClick={() => handleDeleteClick(module)}>Delete</button>
+              {state.loggedInUser?.id === contextState.course?.Instructor._id &&  <button className='update-module-btn' onClick={() => handleUpdateClick(module)}>Update</button>}
+              {state.loggedInUser?.id === contextState.course?.Instructor._id && <button className='delete-module-btn' onClick={() => handleDeleteClick(module)}>Delete</button> } 
+             
+              
             </div>
+            
           ))}
+          <button className='take-asessment-btn' onClick={handleTakeAsessment}>Take Asessment</button>
         </div>
       </div>
     </div>

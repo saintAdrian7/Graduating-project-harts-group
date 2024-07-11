@@ -23,7 +23,7 @@ export default function CourseForm(){
                     {
                         title: titleRef.current.value,
                         description: descriptionRef.current.value,
-                        Instructor: "668d0d64a0915e96aa9f97cd"
+                        Instructor: state.loggedInUser?.id
                     }
                  )
                  

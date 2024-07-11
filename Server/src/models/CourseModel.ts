@@ -29,6 +29,10 @@ const CourseSchema = new Schema(
     Modules: {
         type: [Schema.Types.ObjectId],
         ref: 'Modules'
+    },
+    Asessments: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Asessments'
     }
 })
 

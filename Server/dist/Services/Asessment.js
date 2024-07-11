@@ -17,6 +17,7 @@ exports.updateAsessmentQuestion = updateAsessmentQuestion;
 exports.deleteQuestion = deleteQuestion;
 exports.getQuetions = getQuetions;
 const AsessmentModel_1 = __importDefault(require("../models/AsessmentModel"));
+const mongoose_1 = __importDefault(require("mongoose"));
 function CreateAsessmentQuestion(question) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -56,11 +57,13 @@ function deleteQuestion(id) {
         }
     });
 }
-function getQuetions() {
+function getQuetions(id) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield AsessmentModel_1.default.find();
-            return result;
+            const courseId = id;
+            const courseObjectId = new mongoose_1.default.Types.ObjectId(courseId);
+            const assessments = yield AsessmentModel_1.default.find({ course: courseObjectId });
+            return assessments;
         }
         catch (error) {
             throw error;

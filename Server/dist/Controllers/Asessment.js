@@ -13,9 +13,10 @@ exports.DeleteQuestion = exports.UpdateQuestion = exports.CreateQuestion = expor
 const Asessment_1 = require("../Services/Asessment");
 const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const Questions = yield (0, Asessment_1.getQuetions)();
-        if (!Questions) {
-            return res.status(404).json({ message: 'No Questions Found!' });
+        const { id } = req.params;
+        const Questions = yield (0, Asessment_1.getQuetions)(id);
+        if (!Questions || Questions.length === 0) {
+            return res.status(404).json({ message: 'No assessments found for this course.' });
         }
         return res.status(200).json({ message: "Questions fetch success", Questions });
     }
@@ -25,6 +26,7 @@ const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 exports.getAllQuestions = getAllQuestions;
 const CreateQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { courseId } = req.params;
     const { question, answers, correctAnswer } = req.body;
     try {
         if (!question || !answers || !correctAnswer) {
@@ -33,7 +35,8 @@ const CreateQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const questionData = {
             question,
             answers,
-            correctAnswer
+            correctAnswer,
+            course: courseId
         };
         const newQuestion = yield (0, Asessment_1.CreateAsessmentQuestion)(questionData);
         return res.status(201).json({ message: "Question created successfully", question: newQuestion });

@@ -1,5 +1,5 @@
 import AsessmentModel, { IQuestionModel, Question } from "../models/AsessmentModel";
-import { Document, Types } from "mongoose";
+import mongoose,  { Types } from "mongoose";
 
 export async function CreateAsessmentQuestion (question:Question):Promise<IQuestionModel>{
     try{
@@ -42,10 +42,12 @@ export async function updateAsessmentQuestion(
     }
   }
 
-  export async function getQuetions ():Promise<IQuestionModel[]>{
+  export async function getQuetions (id:string):Promise<IQuestionModel[]>{
     try{
-       const result = await AsessmentModel.find();
-       return result
+      const courseId = id
+      const courseObjectId = new mongoose.Types.ObjectId(courseId);
+      const assessments = await AsessmentModel.find({ course: courseObjectId });
+         return assessments
 
     }catch(error:any){
         throw error

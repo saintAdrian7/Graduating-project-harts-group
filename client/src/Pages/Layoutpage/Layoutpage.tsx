@@ -3,7 +3,7 @@ import './Layoutpage.css'
 import { useAuth } from '../../Context/AuthContextProvider'
 import { LoginRegisterModel } from '../../Features/Authentication/Components/LoginRegisterModel/LoginRegisterModel'
 import { MuiNavbar } from '../../Features/Components/MuiNavbar'
-import { MuiPanel } from '../../Features/Components/Navbar/Muipanel'
+
 
 
 
@@ -14,7 +14,7 @@ const {state} = useAuth()
             {state.displayLogin && <LoginRegisterModel />}
             <MuiNavbar />
             <Outlet />
-            <MuiPanel/>
+
         </div>
 
     )

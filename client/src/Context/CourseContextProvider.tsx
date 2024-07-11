@@ -7,7 +7,7 @@ interface Course {
   _id: string;
   title: string;
   description: string;
-  Instructor: { id: string, firstName: string, lastName: string };
+  Instructor: { _id: string, firstName: string, lastName: string };
   Image: string;
   students: string[];
   Modules: {

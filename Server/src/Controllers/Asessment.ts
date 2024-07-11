@@ -5,9 +5,10 @@ import { IQuestionModel, Question } from '../models/AsessmentModel'
 
 export const getAllQuestions = async (req:Request, res:Response) =>{
     try{
-        const Questions = await getQuetions()
-        if(!Questions){
-            return res.status(404).json({message: 'No Questions Found!'})
+        const {id} = req.params
+        const Questions = await getQuetions(id)
+        if (!Questions || Questions.length === 0) {
+            return res.status(404).json({ message: 'No assessments found for this course.' });
         }
         
         return res.status(200).json({message:"Questions fetch success", Questions})
@@ -20,6 +21,7 @@ export const getAllQuestions = async (req:Request, res:Response) =>{
 
 
 export const CreateQuestion = async (req:Request, res:Response)=>{
+    const {courseId} = req.params
     const { question, answers, correctAnswer } = req.body;
     try{
 
@@ -27,10 +29,12 @@ export const CreateQuestion = async (req:Request, res:Response)=>{
       return res.status(400).json({ message: "All fields are required" });
     }
 
+
     const questionData:Question = {
       question,
       answers,
-      correctAnswer
+      correctAnswer,
+      course:courseId
     };
 
     const newQuestion = await CreateAsessmentQuestion(questionData);

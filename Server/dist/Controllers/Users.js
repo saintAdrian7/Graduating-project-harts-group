@@ -8,11 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleRegister = handleRegister;
 exports.handleLogin = handleLogin;
+exports.getUserById = getUserById;
 const Users_1 = require("../Services/Users");
+const UserModel_1 = __importDefault(require("../models/UserModel"));
 const Errors_1 = require("../Utils/Errors");
+const mongoose_1 = __importDefault(require("mongoose"));
 function handleRegister(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = req.body;
@@ -60,6 +66,36 @@ function handleLogin(req, res) {
             else {
                 res.status(500).json({ message: "Unable to login user try again later", error: error.message });
             }
+        }
+    });
+}
+function getUserById(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { userId } = req.params;
+        console.log('Received userId:', userId);
+        try {
+            if (!userId) {
+                return res.status(400).json({ message: 'User ID is required' });
+            }
+            const objectId = new mongoose_1.default.Types.ObjectId(userId);
+            console.log('Converted objectId:', objectId);
+            const user = yield UserModel_1.default.findById(objectId);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            res.status(200).json({
+                message: "Successfully fetched",
+                user: {
+                    id: user._id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                }
+            });
+        }
+        catch (error) {
+            console.error('Error fetching user:', error);
+            res.status(500).json({ message: 'Unable to fetch user details', error: error.message });
         }
     });
 }

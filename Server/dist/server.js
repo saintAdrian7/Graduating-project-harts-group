@@ -21,6 +21,7 @@ const Course_1 = __importDefault(require("./Routes/Course"));
 const Module_1 = __importDefault(require("./Routes/Module"));
 const Update_1 = __importDefault(require("./Routes/Update"));
 const Asessment_1 = __importDefault(require("./Routes/Asessment"));
+const updateQuestions_1 = __importDefault(require("./Routes/updateQuestions"));
 const PORT = Index_1.config.server.port;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -34,7 +35,8 @@ app.use((0, cors_1.default)());
             app.use('/Courses', Course_1.default);
             app.use('/modules', Module_1.default);
             app.use('/update', Update_1.default);
-            app.use('/Asessments', Asessment_1.default);
+            app.use('/updateQuestions', updateQuestions_1.default);
+            app.use('/asessments', Asessment_1.default);
         }
         catch (error) {
             console.log("Could not make a connection to the database");

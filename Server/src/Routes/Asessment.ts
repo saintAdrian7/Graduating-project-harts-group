@@ -3,8 +3,8 @@ import { getAllQuestions, CreateQuestion, UpdateQuestion, DeleteQuestion } from 
 
 const router = express.Router()
 
-router.get('/', getAllQuestions)
-router.post('/', CreateQuestion)
+router.get('/:id', getAllQuestions)
+router.post('/:courseId', CreateQuestion)
 router.patch('/:id', UpdateQuestion)
 router.delete('/:id', DeleteQuestion)
 

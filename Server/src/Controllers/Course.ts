@@ -4,6 +4,7 @@ import { createModule, deleteCourse, deleteModule, getAllCourses, getModule, get
 import CourseModule from '../models/CourseModule';
 import mongoose from 'mongoose';
 import { log } from 'console';
+import AsessmentModel from '../models/AsessmentModel';
 
 export const getCourses = async (req:Request, res:Response)=>{
     try{
@@ -188,3 +189,34 @@ export const updateCourseWithModules = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Unable to update course at this time.', error: error.message });
     }
 }
+
+
+export const updateCourseWithAssessments = async (req: Request, res: Response) => {
+    const { id: courseId } = req.params;
+
+    try {
+        const courseObjectId = new mongoose.Types.ObjectId(courseId);
+        const assessments = await AsessmentModel.find({ course: courseObjectId });
+
+        if (!assessments || assessments.length === 0) {
+            return res.status(404).json({ message: 'No assessments found for this course.' });
+        }
+
+        const assessmentIds = assessments.map(assessment => assessment._id);
+
+        const updatedCourse = await CourseModel.findByIdAndUpdate(
+            courseId,
+            { $set: { Asessments: assessmentIds } },
+            { new: true }
+        ).populate('Asessments');
+
+        if (!updatedCourse) {
+            return res.status(404).json({ message: 'Course not found.' });
+        }
+
+        res.status(200).json(updatedCourse);
+    } catch (error: any) {
+        console.error('Error updating course with assessments:', error);
+        res.status(500).json({ message: 'Unable to update course with assessments at this time.', error: error.message });
+    }
+};

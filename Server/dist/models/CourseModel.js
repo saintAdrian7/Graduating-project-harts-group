@@ -48,6 +48,10 @@ const CourseSchema = new mongoose_1.Schema({
     Modules: {
         type: [mongoose_1.Schema.Types.ObjectId],
         ref: 'Modules'
+    },
+    Asessments: {
+        type: [mongoose_1.Schema.Types.ObjectId],
+        ref: 'Asessments'
     }
 });
 exports.default = mongoose_1.default.model('Course', CourseSchema);

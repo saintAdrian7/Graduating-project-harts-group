@@ -36,6 +36,11 @@ const AsessmentSchema = new mongoose_1.Schema({
     correctAnswer: {
         type: String,
         required: true
+    },
+    course: {
+        type: [mongoose_1.Schema.Types.ObjectId],
+        ref: 'Course',
+        required: true
     }
 });
 exports.default = mongoose_1.default.model('Asessments', AsessmentSchema);

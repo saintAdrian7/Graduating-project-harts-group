@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
+import { useParams } from "react-router";
 
 interface AssessmentForm {
   question: string;
@@ -9,6 +10,7 @@ interface AssessmentForm {
 }
 
 export const CreateAssessment: React.FC = () => {
+  const {courseId} = useParams()
   const [formState, setFormState] = useState<AssessmentForm>({
     question: "",
     answers: [],
@@ -27,7 +29,9 @@ export const CreateAssessment: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/asessments", formState);
+      console.log(courseId)
+      const response = await axios.post(`http://localhost:4000/asessments/${courseId}`, formState);
+      await axios.get(`http://localhost:4000/updateQuestions/${courseId}`)
       setFeedback("Assessment created successfully!");
       console.log(response.data); 
     } catch (error: any) {

@@ -12,11 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateCourseWithModules = exports.DeleteModule = exports.UpdateModule = exports.CreateModule = exports.getOneModule = exports.getAllModules = exports.DeleteCourse = exports.UpdateCourse = exports.CreateCourse = exports.getCourse = exports.getCourses = void 0;
+exports.updateCourseWithAssessments = exports.updateCourseWithModules = exports.DeleteModule = exports.UpdateModule = exports.CreateModule = exports.getOneModule = exports.getAllModules = exports.DeleteCourse = exports.UpdateCourse = exports.CreateCourse = exports.getCourse = exports.getCourses = void 0;
 const CourseModel_1 = __importDefault(require("../models/CourseModel"));
 const Course_1 = require("../Services/Course");
 const CourseModule_1 = __importDefault(require("../models/CourseModule"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const AsessmentModel_1 = __importDefault(require("../models/AsessmentModel"));
 const getCourses = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Courses = yield (0, Course_1.getAllCourses)();
@@ -173,3 +174,24 @@ const updateCourseWithModules = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.updateCourseWithModules = updateCourseWithModules;
+const updateCourseWithAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id: courseId } = req.params;
+    try {
+        const courseObjectId = new mongoose_1.default.Types.ObjectId(courseId);
+        const assessments = yield AsessmentModel_1.default.find({ course: courseObjectId });
+        if (!assessments || assessments.length === 0) {
+            return res.status(404).json({ message: 'No assessments found for this course.' });
+        }
+        const assessmentIds = assessments.map(assessment => assessment._id);
+        const updatedCourse = yield CourseModel_1.default.findByIdAndUpdate(courseId, { $set: { Asessments: assessmentIds } }, { new: true }).populate('Asessments');
+        if (!updatedCourse) {
+            return res.status(404).json({ message: 'Course not found.' });
+        }
+        res.status(200).json(updatedCourse);
+    }
+    catch (error) {
+        console.error('Error updating course with assessments:', error);
+        res.status(500).json({ message: 'Unable to update course with assessments at this time.', error: error.message });
+    }
+});
+exports.updateCourseWithAssessments = updateCourseWithAssessments;

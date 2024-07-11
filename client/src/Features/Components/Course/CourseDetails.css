@@ -140,3 +140,29 @@ text-align: left;
 color: #FFFFFF;
 
 }
+
+.create-asessment-btn {
+    margin-top: 20px;
+    border: none;
+    background-color: #D42A2A;
+    color: #e0e0e0;
+    font-family: inder;
+    font-weight: bolder;
+    border-radius: 10px;
+    padding: 16px;
+}
+.delete-course-btn{
+    margin-top: 20px;
+    border: none;
+    background-color: #D42A2A;
+    color: #e0e0e0;
+    font-family: inder;
+    font-weight: bolder;
+    border-radius: 10px;
+    padding: 16px; 
+}
+
+.delete-course-btn:hover{
+    background-color: #e0e0e0;
+    color: #D42A2A;
+}
