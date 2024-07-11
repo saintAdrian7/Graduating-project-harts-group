@@ -1,4 +1,4 @@
-import express, { Express, Response, Request } from "express";
+import express, { Express, Response, Request,NextFunction } from "express";
 import cors from 'cors'
 import mongoose from "mongoose";
 import { config } from "./config/Index";
@@ -22,6 +22,13 @@ app.use(cors());
     }
 })();
 
+interface ErrorWithStatus extends Error {
+    status?: number;
+}
+app.use((err: ErrorWithStatus, req: Request, res: Response, next: NextFunction) => {
+    console.error(err.stack);
+    res.status(err.status || 500).send(err.message || 'Something broke!');
+});
 
 app.listen(PORT, () => {
     

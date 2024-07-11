@@ -1,4 +1,4 @@
-import mongoose, {Document, Schema} from "mongoose";
+import mongoose, {Document, Schema, Model} from "mongoose";
 import { User } from "../Interfaces/User";
 import { required } from "joi";
 
@@ -6,10 +6,11 @@ import { required } from "joi";
 
 export interface IUserModel extends User, Document{}
 
-const UserSchema: Schema = new Schema(
+const UserSchema: Schema<IUserModel> = new Schema(
     {
         role:{
-            type:String
+            type:String,
+            default:'user'
         },
         firstName: {
             type: String,
@@ -31,4 +32,7 @@ const UserSchema: Schema = new Schema(
     }
 )
 
+const User:Model<IUserModel> = mongoose.model<IUserModel>('E-learning-users', UserSchema);
+
+export {User};
 export default mongoose.model<IUserModel>('E-learning-users', UserSchema);

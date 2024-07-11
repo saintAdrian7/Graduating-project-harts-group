@@ -1,6 +1,6 @@
 
 import { User } from "../Interfaces/User";
-import UserModel, { IUserModel } from "../models/UserModel";
+import UserModel, {IUserModel } from "../models/UserModel";
 import { config } from "../config/Index";
 import bcrypt from 'bcrypt';
 import { invalidEmailorPasswordError, UnableToSaveUserError } from "../Utils/Errors";
