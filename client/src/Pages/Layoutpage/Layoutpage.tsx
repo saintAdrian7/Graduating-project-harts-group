@@ -1,13 +1,14 @@
 import { Outlet } from 'react-router'
 import './Layoutpage.css'
-import { useAuth } from '../../Context/AuthContextProvider'
+
 import { LoginRegisterModel } from '../../Features/Authentication/Components/LoginRegisterModel/LoginRegisterModel'
 import { MuiNavbar } from '../../Features/Components/MuiNavbar'
+import { useAuth } from '../../Context/Authconstants'
 
 
 
 
-export  function Layoutpage(){
+export default function Layoutpage(){
 const {state} = useAuth()
     return(
         <div className="layoutpage">

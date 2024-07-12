@@ -1,4 +1,5 @@
-import { useAuth } from "../../Context/AuthContextProvider"
+
+import { useAuth } from "../../Context/Authconstants"
 import { LoginRegisterModel } from "../../Features/Authentication/Components/LoginRegisterModel/LoginRegisterModel"
 
 export default function HomePage () {

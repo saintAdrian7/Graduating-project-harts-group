@@ -1,32 +1,36 @@
-import { useAuth } from '../../../Context/AuthContextProvider';
-import { useCourseContext, fetchCourse } from '../../../Context/CourseContextProvider';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import './Course.css';
-import { useEffect, useState } from 'react';
-import CourseDetails from './CourseDetails';
-import { ModuleForm } from './Moduleform/Moduleform';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import CourseDetails from './CourseDetails';
+import './Course.css';
+import { useAuth } from '../../../Context/Authconstants';
+import { useCourseContext } from '../../../Context/CourseContextconstants';
+import { fetchCourse } from '../../../Context/CourseContextactions';
+
+const ModuleForm = React.lazy(() => import('./Moduleform/Moduleform'));
+
 export interface CourseModule {
   _id: string;
   title: string;
   content: string;
-  course?: string; // Assuming course is the course ID
+  course?: string;
   Cover?: string;
 }
 
-export default function Course() {
+const Course = () => {
   const [displayModuleForm, setDisplayModuleForm] = useState<boolean>(false);
   const { state } = useAuth();
   const { contextState, dispatch } = useCourseContext();
   const { courseId } = useParams();
   const [selectedModule, setSelectedModule] = useState<CourseModule | null>(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleTakeAsessment = () =>{
-navigate(`/assessment/${courseId}`)
-
-  }
+  const handleTakeAssessment = () => {
+    navigate(`/assessment/${courseId}`);
+  };
 
   const toggleModuleForm = () => {
     setDisplayModuleForm(!displayModuleForm);
@@ -45,16 +49,14 @@ navigate(`/assessment/${courseId}`)
     setSelectedModule(module);
     setDisplayModuleForm(true);
   };
-  const handleDeleteClick = async (module: CourseModule):Promise<void>=> {
-    try{
-      const moduleId = module._id
-      const courseId = contextState.course?._id
-      await axios.delete(`http://localhost:4000/modules/${moduleId}`)
+
+  const handleDeleteClick = async (module: CourseModule): Promise<void> => {
+      const moduleId = module._id;
+      const courseId = contextState.course?._id;
+      await axios.delete(`http://localhost:4000/modules/${moduleId}`);
       await axios.get(`http://localhost:4000/update/${courseId}`);
       fetchCourse(dispatch, courseId);
-    }catch(error:any){
-      console.log(error.message)
-    }
+    
   };
 
   useEffect(() => {
@@ -63,10 +65,31 @@ navigate(`/assessment/${courseId}`)
     }
   }, [courseId, contextState.course, dispatch]);
 
-  if (contextState.loading) return <h1>Loading...</h1>;
-  if (contextState.error) return <h1>Error loading the course!</h1>;
-  if (!contextState.course) return <h1>The course was not found</h1>;
+  const LoadingComponent = () => (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <CircularProgress size={80} />
+    </Box>
+  );
 
+  const ErrorComponent = () => (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Typography variant="h5" color="error">
+        Error loading the course!
+      </Typography>
+    </Box>
+  );
+
+  const NotFoundComponent = () => (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Typography variant="h5" color="textSecondary">
+        The course was not found
+      </Typography>
+    </Box>
+  );
+
+  if (contextState.loading) return <LoadingComponent />;
+  if (contextState.error) return <ErrorComponent />;
+  if (!contextState.course) return <NotFoundComponent />;
 
   return (
     <div className='course-content'>
@@ -84,31 +107,37 @@ navigate(`/assessment/${courseId}`)
       <div className='separator'></div>
       <div>
         {displayModuleForm && (
-          <ModuleForm
-            setDisplayModuleForm={toggleModuleForm}
-            initialData={selectedModule}
-          />
+          <React.Suspense fallback={<div>Loading Module Form...</div>}>
+            <ModuleForm
+              setDisplayModuleForm={toggleModuleForm}
+              initialData={selectedModule}
+            />
+          </React.Suspense>
         )}
       </div>
       <div className="course-modules">
-        {state.loggedInUser?.id === contextState.course.Instructor._id &&  <button className='toggle-module-form-btn' onClick={toggleModuleForm}>
-           {displayModuleForm ? "Hide Module Form" : "Add Course Module Here"}
-           </button>}
-          
+        {state.loggedInUser?.id === contextState.course?.Instructor._id && (
+          <button className='toggle-module-form-btn' onClick={toggleModuleForm}>
+            {displayModuleForm ? "Hide Module Form" : "Add Course Module Here"}
+          </button>
+        )}
         <div className='modules-container'>
           {contextState.course.Modules.map((module) => (
             <div className={`module ${selectedModule?._id === module._id ? 'active' : ''}`} key={module._id} onClick={() => handleModuleClick(module)}>
               <h2 className={`module-title ${selectedModule?._id === module._id ? 'active' : ''}`}>{module.title}</h2>
-              {state.loggedInUser?.id === contextState.course?.Instructor._id &&  <button className='update-module-btn' onClick={() => handleUpdateClick(module)}>Update</button>}
-              {state.loggedInUser?.id === contextState.course?.Instructor._id && <button className='delete-module-btn' onClick={() => handleDeleteClick(module)}>Delete</button> } 
-             
-              
+              {state.loggedInUser?.id === contextState.course?.Instructor._id && (
+                <button className='update-module-btn' onClick={() => handleUpdateClick(module)}>Update</button>
+              )}
+              {state.loggedInUser?.id === contextState.course?.Instructor._id && (
+                <button className='delete-module-btn' onClick={() => handleDeleteClick(module)}>Delete</button>
+              )}
             </div>
-            
           ))}
-          <button className='take-asessment-btn' onClick={handleTakeAsessment}>Take Asessment</button>
+          <button className='take-asessment-btn' onClick={handleTakeAssessment}>Take Assessment</button>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Course;

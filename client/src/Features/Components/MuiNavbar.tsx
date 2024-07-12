@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { AppBar, Toolbar, Button, ButtonGroup, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, ClickAwayListener, TextField, Box } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CreateIcon from '@mui/icons-material/Create';
 import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
-import { useAuth } from "../../Context/AuthContextProvider";
+
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/Authconstants";
 
 export const MuiNavbar = () => {
     const { state, dispatch } = useAuth();

@@ -1,7 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
-import { fetchCourse, useCourseContext } from "../../../../Context/CourseContextProvider";
+
 import './Moduleform.css';
+import { useCourseContext } from "../../../../Context/CourseContextconstants";
+import { fetchCourse } from "../../../../Context/CourseContextactions";
 
 interface ModulePayload {
   module: {
@@ -28,7 +30,7 @@ interface ModuleFormProps {
   } | null;
 }
 
-export const ModuleForm: React.FC<ModuleFormProps> = ({ setDisplayModuleForm, initialData }) => {
+const ModuleForm: React.FC<ModuleFormProps> = ({ setDisplayModuleForm, initialData }) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [error, setError] = useState<boolean>(false);
@@ -106,3 +108,5 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({ setDisplayModuleForm, in
     </form>
   );
 };
+
+export default ModuleForm

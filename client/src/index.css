@@ -101,24 +101,6 @@ p{
 
 
 
-/* LAYERS-ICONS */
-
-.layer-icon {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; 
-  height: 100vh;
-}
-
-/* ICONS */
-.icon{
-  height: 6.25rem;
-  display: flex;  
-  flex: auto;
-  justify-content: space-between;
-  color: white;
-}
-
 /* MuiNavbar.css */
 
 .top-nav-bar {
@@ -129,39 +111,9 @@ p{
   z-index: 5;
 }
 
-.sidebar {
-  width: 250px; 
-  background-color: #ffffff; 
-}
 
-.sidebar .MuiList-root {
-  padding: 0;
-}
 
-.sidebar .MuiListItem-root {
-  padding: 12px 16px;
-}
 
-.sidebar .MuiListItemIcon-root {
-  min-width: auto; /* Ensure icon size fits */
-  margin-right: 16px;
-}
-
-.sidebar .MuiListItemText-root {
-  font-size: 1rem;
-}
-
-.sidebar .MuiTypography-body1 {
-  color: #333333; 
-}
-
-.icon {
-  color: white; 
-}
-
-.icon:hover {
-  cursor: pointer; 
-}
 
 .handle-login{
   display: flex;

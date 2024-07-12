@@ -1,6 +1,8 @@
 import { useRef, useEffect } from "react";
-import { registerUser, useAuth } from "../../../../Context/AuthContextProvider";
+
 import './Register.css'
+import { useAuth } from "../../../../Context/Authconstants";
+import { registerUser } from "../../../../Context/Authactions";
 
 interface RegisterFormProps{
     toggleLogin():void
@@ -15,12 +17,18 @@ const emailRef = useRef<HTMLInputElement>(null)
 const passwordRef = useRef<HTMLInputElement>(null)
 const {state, dispatch} = useAuth()
 
+useEffect(() => {
+  return () => {
+    dispatch({ type: 'RESET REGISTER SUCCESS' });
+  };
+}, [dispatch]);
+
 
 const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     
 if(firstNameRef && firstNameRef.current && lastNameRef && lastNameRef.current && emailRef && emailRef.current && passwordRef && passwordRef.current){
-    try{
+    
       await registerUser(dispatch, {
           firstName: firstNameRef.current.value,
           lastName: lastNameRef.current.value,
@@ -29,16 +37,7 @@ if(firstNameRef && firstNameRef.current && lastNameRef && lastNameRef.current &&
   
       })
   
-    }catch(e){
-     console.log(e);
-     
-    }
   }
-  useEffect(() => {
-    return () => {
-      dispatch({ type: 'RESET REGISTER SUCCESS' });
-    };
-  }, []);
 }
 
    return (

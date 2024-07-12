@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, Typography, useMediaQuery, useTheme } from "@mui/material";
 import axios from "axios";
 import { useParams } from "react-router";
-import { fetchCourse, useCourseContext } from "../../Context/CourseContextProvider";
-import { useAuth } from "../../Context/AuthContextProvider";
+
+import { useAuth } from "../../Context/Authconstants";
+import { useCourseContext } from "../../Context/CourseContextconstants";
+import { fetchCourse } from "../../Context/CourseContextactions";
+
 
 interface Question {
-  _id: string; // Assuming each question has a unique identifier
+  _id: string; 
   question: string;
   answers: string[];
   correctAnswer: string;
 }
 
-export const AssessmentPage: React.FC = () => {
+export default function  AssessmentPage () {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -35,13 +38,11 @@ export const AssessmentPage: React.FC = () => {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      try {
+      
         const response = await axios.get(`http://localhost:4000/asessments/${courseId}`);
         const data = response.data.Questions;
         setQuestions(data);
-      } catch (error: any) {
-        console.log(error.message);
-      }
+      
     };
 
     fetchQuestions();
@@ -67,12 +68,9 @@ export const AssessmentPage: React.FC = () => {
   };
 
   const handleDeleteQuestion = async (questionId: string) => {
-    try {
+    
       await axios.delete(`http://localhost:4000/asessments/${questionId}`);
       setQuestions((prevQuestions) => prevQuestions.filter((q) => q._id !== questionId));
-    } catch (error: any) {
-      console.log(error.message);
-    }
   };
 
   if (!questions.length) {
@@ -89,8 +87,8 @@ export const AssessmentPage: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        width: isSmallScreen ? '90%' : 'auto', // Adjust width for small screens
-        margin: isSmallScreen ? '0 auto' : 'initial', // Center content for small screens
+        width: isSmallScreen ? '90%' : 'auto',
+        margin: isSmallScreen ? '0 auto' : 'initial', 
       }}
     >
       <Typography variant="h4" gutterBottom>Assessment Time!</Typography>
@@ -159,5 +157,5 @@ export const AssessmentPage: React.FC = () => {
         <Typography variant="h6" gutterBottom>Assessment Complete! Thank you for your participation.</Typography>
       )}
     </Box>
-  );
-};
+  )
+}

@@ -1,10 +1,13 @@
-import { useAuth } from '../../../Context/AuthContextProvider'
-import { useCourseContext, fetchCourse } from '../../../Context/CourseContextProvider'
+
+
 import { useParams } from 'react-router'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import './CourseDetails.css'
 import axios from 'axios'
+import { useAuth } from '../../../Context/Authconstants'
+import { useCourseContext } from '../../../Context/CourseContextconstants'
+import { fetchCourse } from '../../../Context/CourseContextactions'
 
 export default function CourseDetails () {
 const {state} = useAuth()
@@ -21,13 +24,13 @@ const handleDeleteCourse = async () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this course?");
     
     if (confirmDelete) {
-      try {
+      
         await axios.delete(`http://localhost:4000/Courses/${courseId}`);
         navigate('/');
-      } catch (error:any) {
-        console.log(error.message);
+       
+       
         
-      }
+      
     }
   };
   

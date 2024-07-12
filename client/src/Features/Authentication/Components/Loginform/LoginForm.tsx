@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import './LoginForm.css'
-import { loginUser, useAuth } from "../../../../Context/AuthContextProvider";
+import { useAuth } from "../../../../Context/Authconstants";
+import { loginUser } from "../../../../Context/Authactions";
+
 
 interface LoginFormProps{
     toggleRegister():void
@@ -8,7 +10,7 @@ interface LoginFormProps{
 
 
 export const LoginForm:React.FC<LoginFormProps> = ({toggleRegister}) =>{
-    const {state, dispatch} = useAuth()
+    const { dispatch} = useAuth()
     const [error, setError] = useState<boolean>(false)
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)

@@ -9,7 +9,7 @@ interface AssessmentForm {
   correctAnswer: string;
 }
 
-export const CreateAssessment: React.FC = () => {
+export default function CreateAssessment() {
   const {courseId} = useParams()
   const [formState, setFormState] = useState<AssessmentForm>({
     question: "",
@@ -29,13 +29,11 @@ export const CreateAssessment: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      console.log(courseId)
       const response = await axios.post(`http://localhost:4000/asessments/${courseId}`, formState);
       await axios.get(`http://localhost:4000/updateQuestions/${courseId}`)
       setFeedback("Assessment created successfully!");
       console.log(response.data); 
-    } catch (error: any) {
-      console.error("Error creating assessment:", error.message);
+    } catch (error) {
       setFeedback("Failed to create assessment. Please try again.");
     }
   };
@@ -101,5 +99,5 @@ export const CreateAssessment: React.FC = () => {
         </Box>
       </form>
     </Box>
-  );
-};
+  )
+}

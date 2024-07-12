@@ -1,8 +1,11 @@
 import { useRef } from "react"
-import { useAuth } from "../../../Context/AuthContextProvider"
-import { createCourse, fetchCourse, useCourseContext } from "../../../Context/CourseContextProvider"
+
+
 import './CourseForm.css'
 import { useNavigate } from "react-router"
+import { useAuth } from "../../../Context/Authconstants"
+import { useCourseContext } from "../../../Context/CourseContextconstants"
+import { createCourse, fetchCourse } from "../../../Context/CourseContextactions"
 
 
 
@@ -18,7 +21,7 @@ export default function CourseForm(){
         e.preventDefault()
 
         if(titleRef && titleRef.current && descriptionRef && descriptionRef.current){
-            try{
+            
                const courseId =  await  createCourse(dispatch, 
                     {
                         title: titleRef.current.value,
@@ -29,11 +32,7 @@ export default function CourseForm(){
                  
                  
                  await fetchCourse(dispatch, courseId);
-                 navigate(`Course/${courseId}`);
-
-            }catch(error:any){
-                throw error
-            }
+                 navigate(`Course/${courseId}`)
 
         }
 
