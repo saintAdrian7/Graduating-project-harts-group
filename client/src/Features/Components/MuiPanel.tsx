@@ -5,14 +5,13 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import PersonIcon from '@mui/icons-material/Person';
 export const MuiPanel = () => {
     return(
-       <Stack direction="column" paddingBlock={7} className="panel">
+       <Stack direction="column" paddingBlock={7}>
         <div className="panel">
            <IconButton className="layer-icon">
                 <HomeIcon className="icon"/>
                 <SearchIcon className="icon"/>
                 <QuizIcon className="icon"/>
                 <PersonIcon className="icon"/>
-                
            </IconButton>
         </div>
        </Stack>

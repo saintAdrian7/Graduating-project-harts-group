@@ -132,13 +132,80 @@ p{
 @media screen and (max-width: 768px) {
   /* Adjust styles for smaller screens (e.g., mobile devices) */
   .top-nav-bar {
-    flex-direction: column; /* Stack elements vertically */
-    align-items: flex-start; /* Align items to the left */
-    padding: 20px; /* Add some padding for spacing */
+    width: 100%;
+    background-color: #EB4A01;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Inder", sans-serif;
+    font-weight: 50;
+    font-style: normal;
+    color: white;
   }
-
+  .header{
+    font-size: large;
+  }
   .login-button {
-    padding-left: 0; /* Reset padding for smaller screens */
-    margin-top: 20px; /* Add margin between elements */
+    padding-left: 50px; 
+    margin-top: 20px; 
+    font-size: small;
+  }
+  .panel {
+    position: relative;
+    position: absolute; 
+    bottom: 0;
+    background-color: #EB4A01;
+    height: 30px; 
+    width: 100%; 
+  }
+  .layer-icon {
+    width:auto;
+    height: 10px; 
+    width: 100%; 
+    display: flex;
+    flex-direction: row;
+  }
+  .icon{
+    color: white;
+  }
+}
+@media screen and (max-width: 1024px){
+  .top-nav-bar {
+    width: 100%;
+    background-color: #EB4A01;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Inder", sans-serif;
+    font-weight: 100;
+    font-style: bold;
+    color: white;
+  }
+  .header{
+    font-size: xx-large;
+  }
+  .login-button {
+    padding-left: 50px; 
+    margin-top: 20px; 
+  }
+  .panel {
+    position: relative;
+    position: absolute; 
+    bottom: 0;
+    background-color: #EB4A01;
+    height: 50px; 
+    width: 100%; 
+  }
+  .layer-icon {
+    width:auto;
+    height: 50px; 
+    width: 100%; 
+    display: flex;
+    flex-direction: row;
+  }
+  .icon{
+    color: white;
   }
 }
