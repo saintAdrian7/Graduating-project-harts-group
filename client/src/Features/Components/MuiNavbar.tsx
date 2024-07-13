@@ -42,7 +42,7 @@ export const MuiNavbar = () => {
     };
 
     const handleHome = () => {
-        navigate('/');
+        navigate('/Homepage');
         setSidebarOpen(false);
     };
 
