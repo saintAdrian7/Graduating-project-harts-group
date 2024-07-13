@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Box, CircularProgress} from '@mui/material';
 import { useAuth } from "./Context/Authconstants";
 import { fetchUser } from "./Context/Authactions";
+import AddQuestionForm from './Features/Components/AddQuestionForm';
+import QuestionList from './Features/Components/QuestionList';
+import { QuestionsProvider } from './Context/QuestionsContext';
 
 const HomePage = React.lazy(() => import("./Pages/Homepage/Homepage"));
 const Layoutpage = React.lazy(() => import("./Pages/Layoutpage/Layoutpage"));
@@ -31,17 +34,22 @@ function App() {
 
   return (
     <BrowserRouter>
-      <React.Suspense fallback={<LoadingComponent/>}>
-        <Routes>
-          <Route path="/" element={<Layoutpage />}>
-            <Route path="/Homepage" element={<HomePage />} />
-            <Route path="/CreateCourse/Course/:courseId" element={state.loggedInUser ? <Course /> : <LoginProtect />} />
-            <Route path="/CreateCourse" element={state.loggedInUser ? <CourseForm /> : <LoginProtect />} />
-            <Route path="/assessment/:courseId" element={state.loggedInUser ? <AssessmentPage /> : <LoginProtect />} />
-            <Route path="/assessment/createform/:courseId" element={state.loggedInUser ? <CreateAssessment /> : <LoginProtect />} />
-          </Route>
-        </Routes>
-      </React.Suspense>
+      <QuestionsProvider>
+        <React.Suspense fallback={<LoadingComponent/>}>
+          <Routes>
+            <Route path="/" element={<Layoutpage />}>
+              <Route path="/Homepage" element={state.loggedInUser ?<HomePage />:<LoginProtect/>} />
+              <Route path="/CreateCourse/Course/:courseId" element={state.loggedInUser ? <Course /> : <LoginProtect />} />
+              <Route path="/CreateCourse" element={state.loggedInUser ? <CourseForm /> : <LoginProtect />} />
+              <Route path="/assessment/:courseId" element={state.loggedInUser ? <AssessmentPage /> : <LoginProtect />} />
+              <Route path="/assessment/createform/:courseId" element={state.loggedInUser ? <CreateAssessment /> : <LoginProtect />} />
+              <Route path="/add-question" element={<AddQuestionForm />} />
+              <Route path="/questions" element={<QuestionList />} />
+            </Route>
+          </Routes>
+        </React.Suspense>
+      </QuestionsProvider>
+      
     </BrowserRouter>
   );
 }
