@@ -24,6 +24,7 @@ function handleRegister(req, res) {
         const user = req.body;
         try {
             const registeredUser = yield (0, Users_1.Register)(user);
+            const token = (0, Users_1.generateToken)(registeredUser);
             res.status(200).json({
                 message: "Successfully registered user",
                 user: {
@@ -31,7 +32,8 @@ function handleRegister(req, res) {
                     firstName: registeredUser.firstName,
                     lastName: registeredUser.lastName,
                     email: registeredUser.email,
-                }
+                },
+                token: token
             });
         }
         catch (error) {
@@ -49,6 +51,7 @@ function handleLogin(req, res) {
         const credintials = req.body;
         try {
             const user = yield (0, Users_1.Login)(credintials);
+            const token = (0, Users_1.generateToken)(user);
             res.status(200).json({
                 message: "Successfully logged in",
                 user: {
@@ -56,7 +59,8 @@ function handleLogin(req, res) {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
-                }
+                },
+                token: token
             });
         }
         catch (error) {

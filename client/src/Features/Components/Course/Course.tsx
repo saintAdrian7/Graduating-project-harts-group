@@ -50,11 +50,21 @@ const Course = () => {
     setDisplayModuleForm(true);
   };
 
+  const getToken = () => {
+    return localStorage.getItem('token');
+  };
+  
+
   const handleDeleteClick = async (module: CourseModule): Promise<void> => {
       const moduleId = module._id;
       const courseId = contextState.course?._id;
-      await axios.delete(`http://localhost:4000/modules/${moduleId}`);
-      await axios.get(`http://localhost:4000/update/${courseId}`);
+      const token = getToken()
+      await axios.delete(`http://localhost:4000/modules/${moduleId}`, {
+        headers: { Authorization: `Bearer ${token}`}
+      });
+      await axios.get(`http://localhost:4000/update/${courseId}`, {
+        headers: { Authorization: `Bearer ${token}`}
+      });
       fetchCourse(dispatch, courseId);
     
   };

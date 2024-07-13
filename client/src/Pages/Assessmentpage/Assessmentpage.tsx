@@ -29,6 +29,7 @@ export default function  AssessmentPage () {
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
     if (courseId && (!contextState.course || contextState.course._id !== courseId)) {
@@ -38,15 +39,16 @@ export default function  AssessmentPage () {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      
-        const response = await axios.get(`http://localhost:4000/asessments/${courseId}`);
+        const response = await axios.get(`http://localhost:4000/asessments/${courseId}`, {
+          headers: { Authorization: `Bearer ${token}`}
+        });
         const data = response.data.Questions;
         setQuestions(data);
       
     };
 
     fetchQuestions();
-  }, [courseId]);
+  }, [courseId, token]);
 
   const handleAnswer = (answer: string) => {
     setSelectedAnswer(answer);
@@ -68,8 +70,11 @@ export default function  AssessmentPage () {
   };
 
   const handleDeleteQuestion = async (questionId: string) => {
+
     
-      await axios.delete(`http://localhost:4000/asessments/${questionId}`);
+      await axios.delete(`http://localhost:4000/asessments/${questionId}`,{
+        headers: { Authorization: `Bearer ${token}`}
+      });
       setQuestions((prevQuestions) => prevQuestions.filter((q) => q._id !== questionId));
   };
 

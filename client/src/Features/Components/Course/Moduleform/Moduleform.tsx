@@ -44,6 +44,7 @@ const ModuleForm: React.FC<ModuleFormProps> = ({ setDisplayModuleForm, initialDa
   }, [initialData]);
 
   const handleModuleUpdate = async (e: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
+    const token = localStorage.getItem('token')
     e.preventDefault();
     if (!titleRef.current || !contentRef.current) return;
 
@@ -59,8 +60,12 @@ const ModuleForm: React.FC<ModuleFormProps> = ({ setDisplayModuleForm, initialDa
     const courseId = contextState.course?._id;
 
     try {
-      await axios.patch(`http://localhost:4000/modules/${moduleId}`, moduleData);
-      await axios.get(`http://localhost:4000/update/${courseId}`);
+      await axios.patch(`http://localhost:4000/modules/${moduleId}`, moduleData,{
+        headers: { Authorization: `Bearer ${token}`}
+      });
+      await axios.get(`http://localhost:4000/update/${courseId}`, {
+        headers: { Authorization: `Bearer ${token}`}
+      });
       setDisplayModuleForm();
       setError(false);
       fetchCourse(dispatch, courseId);

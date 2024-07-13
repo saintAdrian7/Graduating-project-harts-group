@@ -12,12 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateToken = void 0;
 exports.Register = Register;
 exports.Login = Login;
 const UserModel_1 = __importDefault(require("../models/UserModel"));
 const Index_1 = require("../config/Index");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const Errors_1 = require("../Utils/Errors");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 function Register(user) {
     return __awaiter(this, void 0, void 0, function* () {
         const Rounds = Index_1.config.server.rounds;
@@ -55,4 +59,14 @@ function Login(credintials) {
         }
     });
 }
+const generateToken = (user) => {
+    console.log(Index_1.config.server.jwtSecret);
+    return jsonwebtoken_1.default.sign({
+        id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+    }, Index_1.config.server.jwtSecret, { expiresIn: '1h' });
+};
+exports.generateToken = generateToken;
 exports.default = {};

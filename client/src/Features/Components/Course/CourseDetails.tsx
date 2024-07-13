@@ -22,14 +22,14 @@ const handleCreateAssement = () => {
 
 const handleDeleteCourse = async () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this course?");
+    const token = localStorage.getItem('token')
     
     if (confirmDelete) {
       
-        await axios.delete(`http://localhost:4000/Courses/${courseId}`);
+        await axios.delete(`http://localhost:4000/Courses/${courseId}`,{
+          headers: { Authorization: `Bearer ${token}`}
+        });
         navigate('/');
-       
-       
-        
       
     }
   };

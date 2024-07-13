@@ -4,7 +4,8 @@ import {  LoginUserPayload, RegisterUserPayload } from '../Models/User';
 import { Action} from './Authconstants';
 
 
-export const loginUser = async (dispatch: React.Dispatch<Action>, user: LoginUserPayload) => {
+
+export const LoginUser = async (dispatch: React.Dispatch<Action>, user: LoginUserPayload) => {
   dispatch({ type: 'LOGIN REQUEST' });
   try {
     const response = await axios.post('http://localhost:4000/users/login', user);
@@ -12,6 +13,13 @@ export const loginUser = async (dispatch: React.Dispatch<Action>, user: LoginUse
     const userId = currentLoggedInUser.id;
     if (currentLoggedInUser && currentLoggedInUser.id) {
       sessionStorage.setItem("userId", userId.toString());
+      localStorage.setItem("token", response.data.token)
+      console.log(localStorage.getItem("token"))
+      setTimeout(() => {
+        localStorage.removeItem('token');
+        dispatch({ type: 'LOGOUT' });
+      
+      },216000);
     } else {
       console.error("User ID not found in response");
     }

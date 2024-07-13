@@ -8,6 +8,7 @@ import ModuleRoutes from './Routes/Module'
 import UpdateRoutes from './Routes/Update'
 import AsessmentRoutes from './Routes/Asessment'
 import UpdateQuestionsRoutes from './Routes/updateQuestions'
+import {  NextFunction } from "express";
 
 const PORT = config.server.port
 const app:Express = express()
@@ -19,6 +20,10 @@ app.use(cors());
     try {
         await mongoose.connect(config.mongo.url);
         console.log("Connected to the database successfully");
+        app.use((req:Request, res:Response, next:NextFunction) => {
+            console.log(req.url, req.method)
+            next()
+        })
         app.use('/users', AuthRoutes)
         app.use('/Courses', CourseRoutes)
         app.use('/modules', ModuleRoutes)

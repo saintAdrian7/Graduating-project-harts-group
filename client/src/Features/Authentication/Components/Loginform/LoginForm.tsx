@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import './LoginForm.css'
 import { useAuth } from "../../../../Context/Authconstants";
-import { loginUser } from "../../../../Context/Authactions";
+import { LoginUser } from "../../../../Context/Authactions";
 
 
 interface LoginFormProps{
@@ -20,7 +20,7 @@ export const LoginForm:React.FC<LoginFormProps> = ({toggleRegister}) =>{
      e.preventDefault()
      if (emailRef && emailRef.current && passwordRef &&passwordRef.current)
         try {
-            await loginUser(dispatch, {
+            await LoginUser(dispatch, {
                 email: emailRef.current.value,
                 password: passwordRef.current.value,
             });

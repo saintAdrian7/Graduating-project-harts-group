@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Login, Register } from "../Services/Users";
+import { generateToken, Login, Register } from "../Services/Users";
 import UserModel, { IUserModel } from "../models/UserModel";
 import { invalidEmailorPasswordError } from "../Utils/Errors";
 import mongoose from "mongoose";
@@ -8,7 +8,7 @@ export async function handleRegister(req:Request, res:Response){
     const user = req.body;
     try{
         const registeredUser = await Register(user);
-        
+        const token = generateToken(registeredUser)
             res.status(200).json({
                 message:"Successfully registered user",
                 user:{
@@ -17,7 +17,8 @@ export async function handleRegister(req:Request, res:Response){
                     lastName: registeredUser.lastName,
                     email: registeredUser.email,
                     
-                }
+                },
+                token:token
             
             })
         
@@ -36,6 +37,7 @@ export async function handleLogin(req:Request, res:Response){
     const credintials = req.body
     try{
       const user:IUserModel = await Login(credintials)
+      const token = generateToken(user)
       res.status(200).json({
         message:"Successfully logged in",
         user:{
@@ -44,7 +46,8 @@ export async function handleLogin(req:Request, res:Response){
             lastName: user.lastName,
             email: user.email,
             
-        }
+        },
+        token:token
         })
 
     }catch(error:any){

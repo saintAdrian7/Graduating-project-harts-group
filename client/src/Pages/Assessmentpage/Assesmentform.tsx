@@ -29,8 +29,13 @@ export default function CreateAssessment() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:4000/asessments/${courseId}`, formState);
-      await axios.get(`http://localhost:4000/updateQuestions/${courseId}`)
+      const token = localStorage.getItem('token')
+      const response = await axios.post(`http://localhost:4000/asessments/${courseId}`, formState,{
+        headers: { Authorization: `Bearer ${token}`}
+      });
+      await axios.get(`http://localhost:4000/updateQuestions/${courseId}`, {
+        headers: { Authorization: `Bearer ${token}`}
+      })
       setFeedback("Assessment created successfully!");
       console.log(response.data); 
     } catch (error) {

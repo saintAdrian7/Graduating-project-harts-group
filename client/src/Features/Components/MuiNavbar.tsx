@@ -1,10 +1,12 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { AppBar, Toolbar, Button, ButtonGroup, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, ClickAwayListener, TextField, Box } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import CreateIcon from '@mui/icons-material/Create';
 import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/Authconstants";
@@ -20,7 +22,8 @@ export const MuiNavbar = () => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem("userId");
+        sessionStorage.removeItem("userId");
+        localStorage.removeItem("token")
         dispatch({ type: 'LOGOUT' });
     };
 
@@ -34,7 +37,7 @@ export const MuiNavbar = () => {
     };
 
     const handleMurphyAI = () => {
-        navigate('/murphy-ai');
+        navigate('/murphyAI');
         setSidebarOpen(false); 
     };
 
@@ -54,20 +57,23 @@ export const MuiNavbar = () => {
 
     return (
         <>
-            <AppBar>
+            <AppBar sx={{ backgroundColor: '#EB4A01' }}>
                 <Toolbar className="top-nav-bar">
-                    <IconButton className="hambuger-menu" edge="start" color="inherit" aria-label="menu" onClick={handleSidebarToggle}>
-                        <MenuIcon />
+                    <IconButton className="hambuger-menu" edge="start" color="inherit"       aria-label="menu"  onClick={handleSidebarToggle}  sx={{ zIndex: 1400 }}>
+                        {sidebarOpen ? <CloseIcon /> : <MenuIcon />}
                     </IconButton>
                     <img src="https://tse4.mm.bing.net/th?id=OIG2.JQKfKP6cxFiMrZwI_m4J&pid=ImgGn" alt="logo" width="40px" />
                     <h1>EDU-Murphy</h1>
                     <ButtonGroup aria-label="text button group">
+                        <IconButton color="inherit">
+                            <AccountCircleIcon />
+                        </IconButton>
                         {!state.loggedInUser && <Button variant="text" className="login-button" onClick={setDisplayLogin}>Login or SignUp</Button>}
                         {state.loggedInUser && <Button variant="text" className="login-button" onClick={handleLogout}>Log Out</Button>}
                     </ButtonGroup>
                 </Toolbar>
 
-                {/* Sidebar */}
+                
                 <Drawer anchor="left" open={sidebarOpen} onClose={() => setSidebarOpen(false)}>
                     <div className="sidebar">
                         <List>

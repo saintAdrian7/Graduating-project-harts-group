@@ -1,11 +1,12 @@
 import express from 'express'
 import { getAllModules, getOneModule, CreateModule, UpdateModule, DeleteModule} from '../Controllers/Course'
+import { authenticateToken } from '../middleware/Auth'
 const router = express.Router()
 
-router.get('/', getAllModules)
-router.get('/:id', getOneModule)
-router.post('/', CreateModule)
-router.patch('/:id', UpdateModule)
-router.delete('/:id', DeleteModule)
+router.get('/', authenticateToken, getAllModules)
+router.get('/:id', authenticateToken, getOneModule)
+router.post('/', authenticateToken, CreateModule)
+router.patch('/:id', authenticateToken, UpdateModule)
+router.delete('/:id', authenticateToken, DeleteModule)
 
 export default router

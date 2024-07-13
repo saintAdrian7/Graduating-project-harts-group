@@ -81,6 +81,7 @@ export const DeleteCourse = async (req:Request, res:Response) => {
         return res.status(200).json({message:"Course deleted", DeletedCourse})
 
     }catch(error:any){
+        return res.status(500).json({message:"Server error occured could not delete course"})
 
     }
 }
