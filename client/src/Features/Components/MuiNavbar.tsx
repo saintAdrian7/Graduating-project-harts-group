@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { AppBar, Toolbar, Button, ButtonGroup, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, ClickAwayListener, TextField, Box } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -59,7 +59,7 @@ export const MuiNavbar = () => {
         <>
             <AppBar sx={{ backgroundColor: '#EB4A01' }}>
                 <Toolbar className="top-nav-bar">
-                    <IconButton className="hambuger-menu" edge="start" color="inherit"       aria-label="menu"  onClick={handleSidebarToggle}  sx={{ zIndex: 1400 }}>
+                    <IconButton className="hambuger-menu" edge="start" color="inherit" aria-label="menu" onClick={handleSidebarToggle} sx={{ zIndex: 1400 }}>
                         {sidebarOpen ? <CloseIcon /> : <MenuIcon />}
                     </IconButton>
                     <img src="https://tse4.mm.bing.net/th?id=OIG2.JQKfKP6cxFiMrZwI_m4J&pid=ImgGn" alt="logo" width="40px" />
@@ -73,7 +73,6 @@ export const MuiNavbar = () => {
                     </ButtonGroup>
                 </Toolbar>
 
-                
                 <Drawer anchor="left" open={sidebarOpen} onClose={() => setSidebarOpen(false)}>
                     <div className="sidebar">
                         <List>
@@ -102,6 +101,9 @@ export const MuiNavbar = () => {
                                 <ListItemText primary="Murphy AI" />
                             </ListItem>
                         </List>
+                        <IconButton className="sidebar-close-icon" onClick={() => setSidebarOpen(false)}>
+                            <CloseIcon />
+                        </IconButton>
                     </div>
                 </Drawer>
             </AppBar>
@@ -111,13 +113,13 @@ export const MuiNavbar = () => {
                     <Box
                         sx={{
                             position: 'absolute',
-                            top: '70px', 
+                            top: '70px',
                             width: '100%',
                             display: 'flex',
                             justifyContent: 'center',
                             backgroundColor: 'transparent',
                             padding: '10px',
-                            zIndex: 1300, 
+                            zIndex: 1300,
                             boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                         }}
                     >
