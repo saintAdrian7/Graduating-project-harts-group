@@ -10,7 +10,7 @@ interface LoginFormProps{
 
 
 export const LoginForm:React.FC<LoginFormProps> = ({toggleRegister}) =>{
-    const { dispatch} = useAuth()
+    const { state, dispatch} = useAuth()
     const [error, setError] = useState<boolean>(false)
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
@@ -48,6 +48,7 @@ export const LoginForm:React.FC<LoginFormProps> = ({toggleRegister}) =>{
                 <input className="login-form-input" type="password" placeholder="Password" name="password"  required ref={passwordRef}/>
             </div>
         {error && <p className="login-form-error">Invalid password or Email</p>}
+        {state.loading && <p className="loading-message">Loading... please wait</p>}
         <button className="login-form-button" onClick={handleLogin} type="submit">Login</button>
         <p className="login-form-register-message"><span className="login-form-toggle" onClick={toggleRegister}>Click here</span> to register.</p>
         </form>

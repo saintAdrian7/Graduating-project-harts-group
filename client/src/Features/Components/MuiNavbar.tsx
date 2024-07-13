@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { AppBar, Toolbar, Button, ButtonGroup, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, ClickAwayListener, TextField, Box } from "@mui/material";
+import { ChangeEvent, useState } from "react";
+import { AppBar, Toolbar, Button, ButtonGroup, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, ClickAwayListener, TextField, Box, Grid, Paper } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import CreateIcon from '@mui/icons-material/Create';
@@ -7,14 +7,17 @@ import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/Authconstants";
+import axios from "axios";
+import { Course } from "../../Context/CourseContextconstants";
 
 export const MuiNavbar = () => {
     const { state, dispatch } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
+    const [searchQuery, setSearchQuery] = useState(""); // State to store search query
+    const [searchResults, setSearchResults] = useState([]); // State to store search results
     const navigate = useNavigate();
 
     const setDisplayLogin = () => {
@@ -54,6 +57,27 @@ export const MuiNavbar = () => {
     const handleSearchClose = () => {
         setShowSearch(false);
     };
+
+    const handleSearchInputChange = (event:ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value); 
+    };
+    const handleCourseClick = (courseId:string) => {
+        navigate(`/CreateCourse/Course/${courseId}`)
+        setShowSearch(false);
+        setSearchResults([]);
+    };
+
+    const searchCourses = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/Courses//courses/search?q=${searchQuery}`); 
+            setSearchResults(response.data);
+        } catch (error) {
+            console.error("Error searching courses:", error);
+            
+        }
+    };
+
+    const courseColors = ['#E7690F', '#94B748', '#029EDC', '#FB667C'];
 
     return (
         <>
@@ -117,7 +141,7 @@ export const MuiNavbar = () => {
                             width: '100%',
                             display: 'flex',
                             justifyContent: 'center',
-                            backgroundColor: 'transparent',
+                            backgroundColor: '#FABA14',
                             padding: '10px',
                             zIndex: 1300,
                             boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
@@ -127,6 +151,13 @@ export const MuiNavbar = () => {
                             autoFocus
                             placeholder="Search..."
                             variant="outlined"
+                            value={searchQuery}
+                            onChange={handleSearchInputChange} 
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    searchCourses(); 
+                                }
+                            }}
                             sx={{
                                 width: '80%',
                                 maxWidth: '600px',
@@ -134,6 +165,60 @@ export const MuiNavbar = () => {
                         />
                     </Box>
                 </ClickAwayListener>
+            )}
+
+            {searchResults.length > 0 && (
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '150px', // Adjust position as needed
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        backgroundColor: '#FABA14',
+                        padding: '10px',
+                        zIndex: 1300,
+                        
+                    }}
+                >
+                     <IconButton
+                            sx={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                zIndex: 1400,
+                            }}
+                            onClick={() => setSearchResults([])}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    <Grid container spacing={2}>
+                        {searchResults.map((course:Course) => (
+                            <Grid item xs={12} sm={6} md={3} key={course._id}>
+                                <Paper
+                                    sx={{
+                                        padding: '10px',
+                                        backgroundColor: courseColors[Math.floor(Math.random() * courseColors.length)],
+                                        cursor: 'pointer',
+                                        width:'295px',
+                                        height:"210px",
+                                        display: "flex",
+                                        alignItems:"center",
+                                        justifyContent:"center",
+                                        color:'#FFFFFF',
+                                        fontFamily:'inder',
+                                        fontSize:'40px',
+                                    }}
+                                    
+                                    onClick={() => handleCourseClick(course._id)} 
+                                        
+                                >
+                                    <h3 className="search-title">{course.title}</h3>
+                                </Paper>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
             )}
         </>
     );

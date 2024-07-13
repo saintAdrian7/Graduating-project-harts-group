@@ -82,3 +82,30 @@ color: #FFFFFF;
     font-size: 1.2rem;
     cursor: pointer;
 }
+
+.loading-message {
+    font-size: 1.5rem;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: center;
+    position: fixed;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; 
+    font-family: 'Arial', sans-serif;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
