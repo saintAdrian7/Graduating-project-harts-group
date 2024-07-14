@@ -4,7 +4,9 @@
 // import HomePage from "./Pages/Homepage"
 import { MuiNavbar} from "./Features/Components/MuiNavbar"
 import { MuiPanel} from "./Features/Components/MuiPanel"
-import { MuiTextField} from "./Features/Components/MuiTextField"
+import { MuiLoginForm} from "./Features/Components/MuiLoginForm"
+import { MuiRegisterForm} from "./Features/Components/MuiRegisterForm"
+
 
 function App() {
   return (
@@ -13,7 +15,8 @@ function App() {
     {/* <Navbar /> */}
     <MuiNavbar />
     <MuiPanel />
-    <MuiTextField />
+    <MuiLoginForm />
+    <MuiRegisterForm />
    
     {/* <HomePage /> */}
     </>
