@@ -28,7 +28,7 @@ const CourseModuleModel_1 = __importDefault(require("../models/CourseModuleModel
 function getAllCourses() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const Courses = yield CourseModel_1.default.find();
+            const Courses = yield CourseModel_1.default.find().populate('Instructor', '_id firstName lastName Image');
             return Courses;
         }
         catch (error) {

@@ -6,7 +6,7 @@ import CourseModuleModel, { ICourseModule } from "../models/CourseModuleModel";
 
 export async function getAllCourses():Promise <ICourseModel[] | null>{
 try{
-    const Courses = await CourseModel.find()
+    const Courses = await CourseModel.find().populate('Instructor', '_id firstName lastName Image')
     return Courses;
 
 }catch(error:any){

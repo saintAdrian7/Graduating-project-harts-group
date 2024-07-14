@@ -1,4 +1,4 @@
-import express,{Request, Response} from 'express'
+import {Request, Response} from 'express'
 import CourseModel, { ICourseModel } from '../models/CourseModel'
 import { createModule, deleteCourse, deleteModule, getAllCourses, getModule, getmodules, getOneCourse, updateCourse, updateModule,searchCourses } from '../Services/Course'
 import CourseModule from '../models/CourseModuleModel';
