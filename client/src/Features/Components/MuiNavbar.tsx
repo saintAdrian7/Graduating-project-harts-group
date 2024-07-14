@@ -7,6 +7,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ContactMailIcon from '@mui/icons-material/ContactMail'; 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/Authconstants";
 import axios from "axios";
@@ -16,8 +17,9 @@ export const MuiNavbar = () => {
     const { state, dispatch } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
-    const [searchQuery, setSearchQuery] = useState(""); // State to store search query
-    const [searchResults, setSearchResults] = useState([]); // State to store search results
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const setDisplayLogin = () => {
@@ -26,7 +28,7 @@ export const MuiNavbar = () => {
 
     const handleLogout = () => {
         sessionStorage.removeItem("userId");
-        localStorage.removeItem("token")
+        localStorage.removeItem("token");
         dispatch({ type: 'LOGOUT' });
     };
 
@@ -36,12 +38,12 @@ export const MuiNavbar = () => {
 
     const handleCreateCourse = () => {
         navigate('/CreateCourse');
-        setSidebarOpen(false); 
+        setSidebarOpen(false);
     };
 
     const handleMurphyAI = () => {
         navigate('/murphyAI');
-        setSidebarOpen(false); 
+        setSidebarOpen(false);
     };
 
     const handleHome = () => {
@@ -58,23 +60,30 @@ export const MuiNavbar = () => {
         setShowSearch(false);
     };
 
-    const handleSearchInputChange = (event:ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(event.target.value); 
+    const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
     };
-    const handleCourseClick = (courseId:string) => {
-        navigate(`/CreateCourse/Course/${courseId}`)
+
+    const handleCourseClick = (courseId: string) => {
+        navigate(`/CreateCourse/Course/${courseId}`);
         setShowSearch(false);
         setSearchResults([]);
     };
 
     const searchCourses = async () => {
+        setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:4000/Courses//courses/search?q=${searchQuery}`); 
+            const response = await axios.get(`http://localhost:4000/Courses//courses/search?q=${searchQuery}`);
             setSearchResults(response.data);
         } catch (error) {
             console.error("Error searching courses:", error);
-            
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const handleContactUs = () => {
+        window.location.href = 'https://contact-us-0c4c53.zapier.app/form'; 
     };
 
     const courseColors = ['#E7690F', '#94B748', '#029EDC', '#FB667C'];
@@ -124,6 +133,12 @@ export const MuiNavbar = () => {
                                 </ListItemIcon>
                                 <ListItemText primary="Murphy AI" />
                             </ListItem>
+                            <ListItem button onClick={handleContactUs}> {/* Add Contact Us button */}
+                                <ListItemIcon>
+                                    <ContactMailIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Contact Us" />
+                            </ListItem>
                         </List>
                         <IconButton className="sidebar-close-icon" onClick={() => setSidebarOpen(false)}>
                             <CloseIcon />
@@ -152,10 +167,10 @@ export const MuiNavbar = () => {
                             placeholder="Search..."
                             variant="outlined"
                             value={searchQuery}
-                            onChange={handleSearchInputChange} 
+                            onChange={handleSearchInputChange}
                             onKeyDown={(event) => {
                                 if (event.key === 'Enter') {
-                                    searchCourses(); 
+                                    searchCourses();
                                 }
                             }}
                             sx={{
@@ -167,51 +182,50 @@ export const MuiNavbar = () => {
                 </ClickAwayListener>
             )}
 
+            {loading && <Box sx={{ position: 'absolute', top: '150px', width: '100%', textAlign: 'center', zIndex: 1300 }}>Loading...</Box>}
+
             {searchResults.length > 0 && (
                 <Box
                     sx={{
                         position: 'absolute',
-                        top: '150px', // Adjust position as needed
+                        top: '150px',
                         width: '100%',
                         display: 'flex',
                         justifyContent: 'center',
                         backgroundColor: '#FABA14',
                         padding: '10px',
                         zIndex: 1300,
-                        
                     }}
                 >
-                     <IconButton
-                            sx={{
-                                position: 'absolute',
-                                top: 0,
-                                right: 0,
-                                zIndex: 1400,
-                            }}
-                            onClick={() => setSearchResults([])}
-                        >
-                            <CloseIcon />
-                        </IconButton>
+                    <IconButton
+                        sx={{
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                            zIndex: 1400,
+                        }}
+                        onClick={() => setSearchResults([])}
+                    >
+                        <CloseIcon />
+                    </IconButton>
                     <Grid container spacing={2}>
-                        {searchResults.map((course:Course) => (
+                        {searchResults.map((course: Course) => (
                             <Grid item xs={12} sm={6} md={3} key={course._id}>
                                 <Paper
                                     sx={{
                                         padding: '10px',
                                         backgroundColor: courseColors[Math.floor(Math.random() * courseColors.length)],
                                         cursor: 'pointer',
-                                        width:'295px',
-                                        height:"210px",
+                                        width: '295px',
+                                        height: "210px",
                                         display: "flex",
-                                        alignItems:"center",
-                                        justifyContent:"center",
-                                        color:'#FFFFFF',
-                                        fontFamily:'inder',
-                                        fontSize:'40px',
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        color: '#FFFFFF',
+                                        fontFamily: 'inder',
+                                        fontSize: '40px',
                                     }}
-                                    
-                                    onClick={() => handleCourseClick(course._id)} 
-                                        
+                                    onClick={() => handleCourseClick(course._id)}
                                 >
                                     <h3 className="search-title">{course.title}</h3>
                                 </Paper>
