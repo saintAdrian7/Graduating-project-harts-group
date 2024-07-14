@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateCourseWithAssessments = exports.updateCourseWithModules = exports.DeleteModule = exports.UpdateModule = exports.CreateModule = exports.getOneModule = exports.getAllModules = exports.DeleteCourse = exports.UpdateCourse = exports.CreateCourse = exports.getCourse = exports.getCourses = void 0;
+exports.handleSearch = exports.updateCourseWithAssessments = exports.updateCourseWithModules = exports.DeleteModule = exports.UpdateModule = exports.CreateModule = exports.getOneModule = exports.getAllModules = exports.DeleteCourse = exports.UpdateCourse = exports.CreateCourse = exports.getCourse = exports.getCourses = void 0;
 const CourseModel_1 = __importDefault(require("../models/CourseModel"));
 const Course_1 = require("../Services/Course");
-const CourseModule_1 = __importDefault(require("../models/CourseModule"));
+const CourseModuleModel_1 = __importDefault(require("../models/CourseModuleModel"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const AsessmentModel_1 = __importDefault(require("../models/AsessmentModel"));
 const getCourses = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -83,6 +83,7 @@ const DeleteCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return res.status(200).json({ message: "Course deleted", DeletedCourse });
     }
     catch (error) {
+        return res.status(500).json({ message: "Server error occured could not delete course" });
     }
 });
 exports.DeleteCourse = DeleteCourse;
@@ -112,6 +113,7 @@ const getOneModule = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.getOneModule = getOneModule;
 const CreateModule = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { module } = req.body;
+    console.log(module);
     try {
         const CreatedModule = yield (0, Course_1.createModule)(module);
         if (!CreatedModule) {
@@ -157,7 +159,7 @@ const updateCourseWithModules = (req, res) => __awaiter(void 0, void 0, void 0, 
     const { id: courseId } = req.params;
     try {
         const courseObjectId = new mongoose_1.default.Types.ObjectId(courseId);
-        const modules = yield CourseModule_1.default.find({ course: courseObjectId });
+        const modules = yield CourseModuleModel_1.default.find({ course: courseObjectId });
         if (!modules || modules.length === 0) {
             return res.status(404).json({ message: 'No modules found.' });
         }
@@ -195,3 +197,22 @@ const updateCourseWithAssessments = (req, res) => __awaiter(void 0, void 0, void
     }
 });
 exports.updateCourseWithAssessments = updateCourseWithAssessments;
+const handleSearch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const query = req.query.q;
+    try {
+        const courses = yield CourseModel_1.default.find({
+            $or: [
+                { title: { $regex: query, $options: 'i' } },
+                { description: { $regex: query, $options: 'i' } },
+                { 'Instructor.firstName': { $regex: query, $options: 'i' } },
+                { 'Instructor.lastName': { $regex: query, $options: 'i' } },
+            ]
+        }).populate('Instructor', 'firstName lastName');
+        res.json(courses);
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+exports.handleSearch = handleSearch;

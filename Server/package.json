@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-   "build": "rimraf dist && tsc",
-   "prestart": "npm run build",
-   "start": "node ./dist/server.js",
-   "predev": "npm run build",
-   "dev":"concurrently \"tsc -w\" \"nodemon ./dist/server.js\""
+    "build": "rimraf dist && tsc",
+    "prestart": "npm run build",
+    "start": "node ./dist/server.js",
+    "predev": "npm run build",
+    "dev": "concurrently \"tsc -w\" \"nodemon ./dist/server.js\""
   },
   "keywords": [],
   "author": "Adrian",
@@ -24,10 +24,12 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.4",
     "rimraf": "^5.0.7"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "nodemon": "^3.1.4"
   }
 }
