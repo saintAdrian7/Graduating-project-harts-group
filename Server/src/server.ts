@@ -25,6 +25,7 @@ app.use(cors());
         app.use('/update', UpdateRoutes)
         app.use('/updateQuestions', UpdateQuestionsRoutes)
         app.use('/asessments', AsessmentRoutes)
+        app.use('/search', CourseRoutes)
     } catch (error) {
         console.log("Could not make a connection to the database");
         console.error(error);

@@ -5,6 +5,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
+import Book from "@mui/icons-material/Book";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/Authconstants";
@@ -51,6 +52,10 @@ export const MuiNavbar = () => {
     const handleSearchClose = () => {
         setShowSearch(false);
     };
+    const handleAvailableCourses = () => {
+        navigate('/CourseList');
+        setSidebarOpen(false);
+    }
 
     return (
         <>
@@ -94,6 +99,12 @@ export const MuiNavbar = () => {
                                     <SchoolIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Murphy AI" />
+                            </ListItem>
+                            <ListItem button onClick={handleAvailableCourses}>
+                                <ListItemIcon>
+                                    <Book />
+                                </ListItemIcon>
+                                <ListItemText primary="Available Courses" />
                             </ListItem>
                         </List>
                     </div>

@@ -37,6 +37,7 @@ app.use((0, cors_1.default)());
             app.use('/update', Update_1.default);
             app.use('/updateQuestions', updateQuestions_1.default);
             app.use('/asessments', Asessment_1.default);
+            app.use('/search', Course_1.default);
         }
         catch (error) {
             console.log("Could not make a connection to the database");

@@ -119,3 +119,12 @@ export async function getModule(id:string):Promise<ICourseModule | null> {
         throw error
     }
 } 
+
+export async function searchCourses(keyword: string): Promise<ICourseModel[] | null> {
+    try {
+      const courses = await CourseModel.find({ title: new RegExp(keyword, 'i') });
+      return courses;
+    } catch (error: any) {
+      throw error;
+    }
+  }

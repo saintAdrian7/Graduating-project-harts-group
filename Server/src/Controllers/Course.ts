@@ -1,6 +1,6 @@
 import express,{Request, Response} from 'express'
 import CourseModel, { ICourseModel } from '../models/CourseModel'
-import { createModule, deleteCourse, deleteModule, getAllCourses, getModule, getmodules, getOneCourse, updateCourse, updateModule } from '../Services/Course'
+import { createModule, deleteCourse, deleteModule, getAllCourses, getModule, getmodules, getOneCourse, updateCourse, updateModule,searchCourses } from '../Services/Course'
 import CourseModule from '../models/CourseModule';
 import mongoose from 'mongoose';
 import { log } from 'console';
@@ -220,3 +220,13 @@ export const updateCourseWithAssessments = async (req: Request, res: Response) =
         res.status(500).json({ message: 'Unable to update course with assessments at this time.', error: error.message });
     }
 };
+
+export const searchCourse = async (req: Request, res: Response) => {
+    const { q } = req.query;
+    try {
+      const courses = await searchCourses(q as string);
+      res.status(200).json(courses);
+    } catch (error: any) {
+      res.status(500).json({ message: 'Unable to search courses at this time', error: error.message });
+    }
+  };
