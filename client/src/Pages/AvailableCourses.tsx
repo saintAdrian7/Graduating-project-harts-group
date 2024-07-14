@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardMedia, Typography, Grid, Box } from '@mui/material';
-import SearchBar from '../Features/Components/SearchBar';
+//import SearchBar from '../Features/Components/SearchBar';
 
 interface Course {
   _id: string;
@@ -40,7 +40,7 @@ const AvailableCourses: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         Available Courses
       </Typography>
-      <SearchBar setCourses={setCourses}  />
+      {/* <SearchBar setCourses={setCourses}  /> */}
       <Grid container spacing={2} sx={{ marginTop: 2 }}>
         {courses.map((course) => (
           <Grid item xs={12} sm={6} md={4} key={course._id}>
