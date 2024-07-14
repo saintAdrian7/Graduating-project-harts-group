@@ -74,6 +74,10 @@ p{
   box-shadow: var(--box-shadow);
 }
 
+.sidebar{
+  background-color: #EB4A01;
+  height: 100%;
+}
 
 .top-nav-bar {
   width: 100%;

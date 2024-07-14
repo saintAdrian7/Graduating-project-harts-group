@@ -1,5 +1,6 @@
+import { CourseModule } from "../Interfaces/CourseModule";
 import CourseModel, { ICourseModel } from "../models/CourseModel"
-import CourseModule, { ICourseModule } from "../models/CourseModule";
+import CourseModuleModel, { ICourseModule } from "../models/CourseModuleModel";
 
 
 
@@ -65,9 +66,9 @@ export async function deleteCourse(id: string): Promise<ICourseModel | null> {
 }
 
 
-export async function createModule(module:ICourseModule):Promise<ICourseModule> {
+export async function createModule(module:CourseModule):Promise<ICourseModule> {
     try{
-        const newModule = new CourseModule(module)
+        const newModule = new CourseModuleModel(module)
         const savedModule = await newModule.save()
         return savedModule
 
@@ -79,7 +80,7 @@ export async function createModule(module:ICourseModule):Promise<ICourseModule> 
 
 export async function updateModule(id:string,  module: Partial<ICourseModule>):Promise<ICourseModule | null> {
     try{
-        const updatedModule = await CourseModule.findByIdAndUpdate(id,
+        const updatedModule = await CourseModuleModel.findByIdAndUpdate(id,
             { $set: module },
             { new: true, runValidators: true })
         return updatedModule
@@ -92,7 +93,7 @@ export async function updateModule(id:string,  module: Partial<ICourseModule>):P
 
 export async function deleteModule(id:string):Promise<ICourseModule | null> {
     try{
-        const deletedModule = await CourseModule.findByIdAndDelete(id)
+        const deletedModule = await CourseModuleModel.findByIdAndDelete(id)
         return deletedModule
 
     }catch(error:any){
@@ -102,7 +103,7 @@ export async function deleteModule(id:string):Promise<ICourseModule | null> {
 
 export async function getmodules():Promise<ICourseModule[]> {
     try{
-        const modules = await CourseModule.find()
+        const modules = await CourseModuleModel.find()
         return modules
 
     }catch(error:any){
@@ -112,7 +113,7 @@ export async function getmodules():Promise<ICourseModule[]> {
 
 export async function getModule(id:string):Promise<ICourseModule | null> {
     try{
-        const module = await CourseModule.findById(id)
+        const module = await CourseModuleModel.findById(id)
         return module
 
     }catch(error:any){

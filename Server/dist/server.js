@@ -31,6 +31,10 @@ app.use((0, cors_1.default)());
         try {
             yield mongoose_1.default.connect(Index_1.config.mongo.url);
             console.log("Connected to the database successfully");
+            app.use((req, res, next) => {
+                console.log(req.url, req.method);
+                next();
+            });
             app.use('/users', Users_1.default);
             app.use('/Courses', Course_1.default);
             app.use('/modules', Module_1.default);

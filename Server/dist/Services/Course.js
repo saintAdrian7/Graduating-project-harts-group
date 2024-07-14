@@ -24,7 +24,7 @@ exports.getmodules = getmodules;
 exports.getModule = getModule;
 exports.searchCourses = searchCourses;
 const CourseModel_1 = __importDefault(require("../models/CourseModel"));
-const CourseModule_1 = __importDefault(require("../models/CourseModule"));
+const CourseModuleModel_1 = __importDefault(require("../models/CourseModuleModel"));
 function getAllCourses() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -86,7 +86,7 @@ function deleteCourse(id) {
 function createModule(module) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const newModule = new CourseModule_1.default(module);
+            const newModule = new CourseModuleModel_1.default(module);
             const savedModule = yield newModule.save();
             return savedModule;
         }
@@ -98,7 +98,7 @@ function createModule(module) {
 function updateModule(id, module) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const updatedModule = yield CourseModule_1.default.findByIdAndUpdate(id, { $set: module }, { new: true, runValidators: true });
+            const updatedModule = yield CourseModuleModel_1.default.findByIdAndUpdate(id, { $set: module }, { new: true, runValidators: true });
             return updatedModule;
         }
         catch (error) {
@@ -109,7 +109,7 @@ function updateModule(id, module) {
 function deleteModule(id) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const deletedModule = yield CourseModule_1.default.findByIdAndDelete(id);
+            const deletedModule = yield CourseModuleModel_1.default.findByIdAndDelete(id);
             return deletedModule;
         }
         catch (error) {
@@ -120,7 +120,7 @@ function deleteModule(id) {
 function getmodules() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const modules = yield CourseModule_1.default.find();
+            const modules = yield CourseModuleModel_1.default.find();
             return modules;
         }
         catch (error) {
@@ -131,7 +131,7 @@ function getmodules() {
 function getModule(id) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const module = yield CourseModule_1.default.findById(id);
+            const module = yield CourseModuleModel_1.default.findById(id);
             return module;
         }
         catch (error) {

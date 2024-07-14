@@ -4,6 +4,10 @@ import UserModel, { IUserModel } from "../models/UserModel";
 import { config } from "../config/Index";
 import bcrypt from 'bcrypt';
 import { invalidEmailorPasswordError, UnableToSaveUserError } from "../Utils/Errors";
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 
 export async function Register(user:User):Promise<IUserModel>{
@@ -41,5 +45,19 @@ export async function Login (credintials: {email:string, password:string}):Promi
 
     }
 }
+
+export const generateToken = (user: IUserModel) => {
+    console.log(config.server.jwtSecret)
+  return jwt.sign(
+    {
+      id: user._id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    },
+    config.server.jwtSecret, 
+    { expiresIn: '1h' } 
+  );
+};
 
 export default {}
