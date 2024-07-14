@@ -143,20 +143,16 @@ p{
     font-style: normal;
     color: white;
   }
-  .header{
-    font-size: large;
-  }
   .login-button {
-    padding-left: 50px; 
-    margin-top: 20px; 
-    font-size: small;
+    padding-left: 3.125rem; 
+    margin-top: 1.25rem; 
   }
   .panel {
     position: relative;
     position: absolute; 
     bottom: 0;
     background-color: #EB4A01;
-    height: 30px; 
+    height: 1.875rem; 
     width: 100%; 
   }
   .layer-icon {

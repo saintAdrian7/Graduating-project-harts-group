@@ -4,6 +4,7 @@
 // import HomePage from "./Pages/Homepage"
 import { MuiNavbar} from "./Features/Components/MuiNavbar"
 import { MuiPanel} from "./Features/Components/MuiPanel"
+import { MuiTextField} from "./Features/Components/MuiTextField"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
     {/* <Navbar /> */}
     <MuiNavbar />
     <MuiPanel />
+    <MuiTextField />
    
     {/* <HomePage /> */}
     </>
