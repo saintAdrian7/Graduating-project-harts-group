@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleSearch = exports.updateCourseWithAssessments = exports.updateCourseWithModules = exports.DeleteModule = exports.UpdateModule = exports.CreateModule = exports.getOneModule = exports.getAllModules = exports.DeleteCourse = exports.UpdateCourse = exports.CreateCourse = exports.getCourse = exports.getCourses = void 0;
+exports.handleSearch = exports.searchCourse = exports.updateCourseWithAssessments = exports.updateCourseWithModules = exports.DeleteModule = exports.UpdateModule = exports.CreateModule = exports.getOneModule = exports.getAllModules = exports.DeleteCourse = exports.UpdateCourse = exports.CreateCourse = exports.getCourse = exports.getCourses = void 0;
 const CourseModel_1 = __importDefault(require("../models/CourseModel"));
 const Course_1 = require("../Services/Course");
 const CourseModuleModel_1 = __importDefault(require("../models/CourseModuleModel"));
@@ -197,6 +197,17 @@ const updateCourseWithAssessments = (req, res) => __awaiter(void 0, void 0, void
     }
 });
 exports.updateCourseWithAssessments = updateCourseWithAssessments;
+const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { q } = req.query;
+    try {
+        const courses = yield (0, Course_1.searchCourses)(q);
+        res.status(200).json(courses);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Unable to search courses at this time', error: error.message });
+    }
+});
+exports.searchCourse = searchCourse;
 const handleSearch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.query.q;
     try {

@@ -22,6 +22,7 @@ exports.updateModule = updateModule;
 exports.deleteModule = deleteModule;
 exports.getmodules = getmodules;
 exports.getModule = getModule;
+exports.searchCourses = searchCourses;
 const CourseModel_1 = __importDefault(require("../models/CourseModel"));
 const CourseModuleModel_1 = __importDefault(require("../models/CourseModuleModel"));
 function getAllCourses() {
@@ -132,6 +133,17 @@ function getModule(id) {
         try {
             const module = yield CourseModuleModel_1.default.findById(id);
             return module;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function searchCourses(keyword) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const courses = yield CourseModel_1.default.find({ title: new RegExp(keyword, 'i') });
+            return courses;
         }
         catch (error) {
             throw error;
