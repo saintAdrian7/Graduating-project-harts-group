@@ -2,6 +2,8 @@ import { useRef, useState } from "react";
 import './LoginForm.css'
 import { useAuth } from "../../../../Context/Authconstants";
 import { LoginUser } from "../../../../Context/Authactions";
+import { Stack,TextField, Button } from "@mui/material"
+
 
 
 interface LoginFormProps{
@@ -41,15 +43,15 @@ export const LoginForm:React.FC<LoginFormProps> = ({toggleRegister}) =>{
         <form className="login-form">
             <h2 className="login-form-title">Login with Email</h2>
             <div  className="login-form-input-group">
-                <h3>Email:</h3>
-                <input className="login-form-input" type="email" placeholder="Email" ref={emailRef} name="email" required/>
-
-                <h3>Password:</h3>
-                <input className="login-form-input" type="password" placeholder="Password" name="password"  required ref={passwordRef}/>
+                <Stack direction="column" spacing={3} width="80%">
+                    <TextField label="email" variant="outlined" size="small" color="primary" type="email" required className="login-form-input"  placeholder="githubrian331@gmail.com" ref={emailRef} name="email"/>
+                    
+                    <TextField label="password" variant="outlined" size="small" color="primary" type="password" required className="login-form-input" placeholder="your secret" name="password" ref={passwordRef}/>
+                </Stack>
             </div>
         {error && <p className="login-form-error">Invalid password or Email</p>}
         {state.loading && <p className="loading-message">Loading... please wait</p>}
-        <button className="login-form-button" onClick={handleLogin} type="submit">Login</button>
+        <Button variant="text" size="small" className="login-form-button" onClick={handleLogin} type="submit">Login</Button>
         <p className="login-form-register-message"><span className="login-form-toggle" onClick={toggleRegister}>Click here</span> to register.</p>
         </form>
     )

@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
+import { TextField, Button } from "@mui/material"
 
 import './Moduleform.css';
 import { useCourseContext } from "../../../../Context/CourseContextconstants";
@@ -111,12 +112,12 @@ const ModuleForm: React.FC<ModuleFormProps> = ({ setDisplayModuleForm, initialDa
   return (
     <form className="module-form">
       <h2 className="module-form-title">Title:</h2>
-      <input className="module-form-input-title" name="title" required placeholder="Enter module title..." ref={titleRef} />
+      <TextField label="Title" className="module-fTextField-title" name="title" required placeholder="Enter module title..." ref={titleRef} />
       <h2 className="module-form-title">Content:</h2>
       <textarea className="module-form-input-content" name="content" required placeholder="Enter module text content..." ref={contentRef} />
       <div className="buttons">
-        <button className="module-form-btn" onClick={handleModuleSubmission}>Create Module</button>
-        {initialData && <button className="module-form-btn" onClick={handleModuleUpdate}>Update Module</button>}
+        <Button  variant="contained" className="module-form-btn" onClick={handleModuleSubmission}>Create Module</Button>
+        {initialData && <Button variant="contained" className="module-form-btn" onClick={handleModuleUpdate}>Update Module</Button>}
       </div>
       {error && <p className="module-form-error">Unable to upload module at this time</p>}
     </form>

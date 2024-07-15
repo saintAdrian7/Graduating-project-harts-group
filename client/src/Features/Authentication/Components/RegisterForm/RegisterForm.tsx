@@ -3,6 +3,8 @@ import { useRef, useEffect } from "react";
 import './Register.css'
 import { useAuth } from "../../../../Context/Authconstants";
 import { registerUser } from "../../../../Context/Authactions";
+import { Stack,TextField, Button } from "@mui/material"
+
 
 interface RegisterFormProps{
     toggleLogin():void
@@ -42,20 +44,20 @@ if(firstNameRef && firstNameRef.current && lastNameRef && lastNameRef.current &&
 
    return (
         <form className="register-form">
-            <h2 className="register-form-title">Sign In using Email</h2>
+            <h2 className="register-form-title">Sign in using email</h2>
             <div className="register-form">
-                <h3>FirstName:</h3>
-                <input type="text" ref={firstNameRef} placeholder="Enter your first name" required name="firstName"/>
-                <h3>LastName:</h3>
-                <input type="text" ref={lastNameRef} placeholder="Enter your last name" required name="lastName"/>
-                <h3>Email:</h3>
-                <input type="email" placeholder="Email" ref={emailRef} name="email" required/>
+            <Stack direction="column" spacing={3} width="80%">
+                <TextField label="Firstname" variant="outlined" size="small" color="primary" type="text" ref={firstNameRef} placeholder="Brian" required name="firstName"/>
 
-                <h3>Password:</h3>
-                <input type="password" placeholder="Password" name="password"  required ref={passwordRef}/>
+                <TextField label="Lastname" variant="outlined" size="small" color="primary" type="text" ref={lastNameRef} placeholder="Githu" required name="lastName"/>
+
+                <TextField label="email" variant="outlined" size="small" color="primary" type="email" placeholder="githubrian331@gmail.com" ref={emailRef} name="email" required/>
+
+                <TextField label="password" variant="outlined" size="small" color="primary" type="password" placeholder="your secret" name="password"  required ref={passwordRef}/>
+                </Stack>
             </div>
             {state.error && <p className="register-form-error">Unable to register at this time</p>}
-            <button className="register-form-button" onClick={handleRegister}>Register</button>
+            <Button variant="text" size="small" className="register-form-button" onClick={handleRegister}>Register</Button>
             {state.registerSuccess && <p className=".register-form-register-message">registered success</p>}<span className="register-form-toggle" onClick={toggleLogin}>Click here to login</span> 
             
 
